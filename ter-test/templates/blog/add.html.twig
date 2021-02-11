@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form method="post" action="">
+        <legend>Ajoutez un acteur</legend>
+        <input class="form-control form-control-lg" type="text" placeholder="Nom de l'acteur">
+        <input class="form-control form-control-lg" type="text" placeholder="Pays d'origine">
+        <input class="form-control form-control-lg" type="text" placeholder="Lien vers une photo de l'acteur">
+        <input class="form-control form-control-lg" type="text" placeholder="Déscription de l'acteur">
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+{% endblock %}
