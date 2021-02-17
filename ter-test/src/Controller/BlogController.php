@@ -32,4 +32,5 @@ class BlogController extends AbstractController
     public function show(){
         return $this->render('blog/all.html.twig');
     }
+  
 }
