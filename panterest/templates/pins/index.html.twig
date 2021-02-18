@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" >
+		<title>Project</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+		<!-- Bootstrap 4.5.2 CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+		<!-- Slick 1.8.1 jQuery plugin CSS (Sliders) -->
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+		<!-- Fancybox 3 jQuery plugin CSS (Open images and video in popup) -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+		<!-- AOS 2.3.4 jQuery plugin CSS (Animations) -->
+		<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+		<!-- FontAwesome CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+		<!-- Startup CSS (Styles for all blocks) - Remove ".min" if you would edit a css code -->
+		<link href="css/style.min.css" rel="stylesheet" />
+		<!-- jQuery 3.5.1 -->
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	</head> 
+	<body>
+	<!-- Header 1 -->
+		<header class="pt-195 pb-110 bg-light header_1">
+			<nav class="header_menu_1 pt-30 pb-30 mt-30">
+				<div class="container px-xl-0">
+					<div class="row justify-content-center align-items-center f-18 medium">
+						<div class="col-lg-3">
+							<a href="#" class="link img_link">
+							</a>
+						</div>
+						<div class="col-lg-6 text-center" data-aos="fade-up" data-aos-delay="1200">
+							<a href="#" class="link color-heading mx-15">
+								Acceuil
+							</a>
+							<a href="#" class="link color-heading mx-15">
+								Annonces
+							</a>
+						</div>
+						<div class="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-end align-items-center" data-aos="fade-up" data-aos-delay="1600">
+							<a href="{{ path('app_pins_inscrit') }}" class="link mr-20 color-heading">
+								Inscription 
+							</a>
+							<a href="{{path('app_pins_create')}}" class="btn sm action-1">
+								Connexion
+							</a>
+						</div>
+					</div>
+				</div>
+			</nav>
+			<div class="container">
+		
+				<h1 class="big text-center" data-aos="fade-up" data-aos-delay="0">
+					Clique Service Proximity
+				</h1>
+				<div class="mw-600 mx-auto mt-30 f-22 color-heading text-center text-adaptive" data-aos="fade-up" data-aos-delay="400">
+					Besoin d'un plombier, Maçon, peintre, médecin  ou autre ? 
+					<br> Proximity vous fournit les prises de rendez-vous avec 
+					<br> les prestataires les plus qualifiés dans le domaine.
+				</div>
+				<div class="mt-80 text-center buttons" data-aos="fade-up" data-aos-delay="800">
+					<div>
+						<a href="#" class="btn action-1 xl">
+							Rechercher un prestataire
+						</a>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- Blog 1 -->
+			<section class="bg-light blog_1">
+				<div class="container px-xl-0">
+					 
+					<div class="row justify-content-between">
+						<div class="col-lg-6 col-xl-5 d-flex justify-content-center">
+							<img src="uploads/e0ce35c7af4fc7e17fcb3e2b33abc54e.jpg" alt="" class="w-full" data-aos="fade-up" data-aos-delay="0">
+						</div>
+						<div class="col-lg-6 pt-100 pb-100">
+							<h3 class="mb-25" data-aos="fade-up" data-aos-delay="800">
+								Vous êtes un professionnel ? inscrivez-vous pour publier votre annonce.  
+							</h3>
+							<div class="mb-70 color-heading f-18 text-adaptive" data-aos="fade-up" data-aos-delay="1200">
+							</div>
+							<div class="d-sm-flex justify-content-between" data-aos="fade-up" data-aos-delay="1600">
+								<a href="{{ path('app_pins_inscrit') }}" class="mb-4 mb-sm-0 btn action-1 f-16 ml-210 xl">
+									Inscription
+								</a>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- Feature 1 -->
+				<section class="pt-105 pb-45 bg-light text-center feature_1">
+					<div class="container px-xl-0">
+						<div class="row justify-content-center">
+							<div class="col-xl-10">
+								<div class="row justify-content-center">
+									<div class="col-md-4 mb-50" data-aos="fade-up" data-aos-delay="400">
+										<i class="fas fa-briefcase f-60 action-3">
+										</i>
+										<div class="mt-20 mb-25 f-22 title">
+											Professionnels
+										</div>
+										<div class="color-heading text-adaptive">
+											Plusieurs services offerts par des professionnels qualifiés dans un seul endroit.
+										</div>
+									</div>
+									<div class="col-md-4 mb-50" data-aos="fade-up" data-aos-delay="800">
+										<i class="fas fa-compress-arrows-alt f-60 action-3">
+										</i>
+										<div class="mt-20 mb-25 f-22 title">
+											Proximité
+										</div>
+										<div class="color-heading text-adaptive">
+											Maçons, plombiers ou même médecins
+											<br> ils sont tous la proches de chez vous.
+										</div>
+									</div>
+									<div class="col-md-4 mb-50" data-aos="fade-up" data-aos-delay="1200">
+										<i class="fas fa-desktop f-60 action-3" data-aos="fade-up" data-aos-delay="0">
+										</i>
+										<div class="mt-20 mb-25 f-22 title">
+											Rapidité
+										</div>
+										<div class="color-heading text-adaptive">
+											Trouvez du travail  ou recrutez un 
+											<br> prestataire en un click seulement.
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+		<!-- forms alerts -->
+		<div class="alert alert-success alert-dismissible fixed-top alert-form-success" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			Thanks for your message!
+		</div>
+		<div class="alert alert-warning alert-dismissible fixed-top alert-form-check-fields" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			Please, fill in required fields.
+		</div>
+		<div class="alert alert-danger alert-dismissible fixed-top alert-form-error" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<div class="message">An error occurred while sending data :( Please, check if your hosting supports PHP and check how to set form data sending <a href="https://designmodo.com/startup/documentation/#form-handler" target="_blank" class="link color-transparent-white">here</a>.</div>
+		</div>
+		<!-- Bootstrap 4.5.2 JS -->
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+		<!-- Fancybox 3 jQuery plugin JS (Open images and video in popup) -->
+		<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+		
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDP6Ex5S03nvKZJZSvGXsEAi3X_tFkua4U"></script>
+		<!-- Slick 1.8.1 jQuery plugin JS (Sliders) -->
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+		<!-- AOS 2.3.4 jQuery plugin JS (Animations) -->
+		<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+		<!-- Maskedinput jQuery plugin JS (Masks for input fields) -->
+		<script src="js/jquery.maskedinput.min.js"></script>
+		<!-- Startup JS (Custom js for all blocks) -->
+		<script src="js/script.js"></script>
+	</body>
+</html>
