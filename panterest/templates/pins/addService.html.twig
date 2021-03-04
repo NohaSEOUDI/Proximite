@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   
+    {{ form_start(formService) }}
+     {{ form_widget(formService) }}
+    <button type="submit" class="btn btn-primary">Enregistrer et passer à la suite</button>
+    {{ form_end(formService) }}
+    
+    
+    {#{{form(formFournisseur)}} pour afficher le formulaire en entier #}
+{% endblock %}

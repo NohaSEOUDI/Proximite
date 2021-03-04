@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   
+    {{ form_start(form) }}
+     {{ form_row(form.type,{'attr':{'placeholder': "Type"}}) }}
+    <button type="submit" class="btn btn-primary">Enregistrer et passer à la suite</button>
+    {{ form_end(form) }}
+    
+    
+    {#{{form(formFournisseur)}} pour afficher le formulaire en entier #}
+{% endblock %}
