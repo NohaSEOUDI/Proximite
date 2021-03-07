@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+{% block head %}
+		<meta charset="utf-8" >
+		<title>Project</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+	{% endblock  %}
+	{% block body %}
+
+	<!-- Header 1 -->
+		<header class="pt-195 pb-110 bg-light header_1">
+			<nav class="header_menu_1 pt-30 pb-30 mt-30">
+				<div class="container px-xl-0">
+					<div class="row justify-content-center align-items-center f-18 medium">
+						<div class="col-lg-3">
+							<a href="#" class="link img_link">
+							</a>
+						</div>
+						<div class="col-lg-6 text-center" data-aos="fade-up" data-aos-delay="1200">
+							<a href="{{ path('app_home') }}" class="link color-heading mx-15">
+								Acceuil
+							</a>
+							<a href="#" class="link color-heading mx-15">
+								Annonces
+							</a>
+						</div>
+						<div class="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-end align-items-center" data-aos="fade-up" data-aos-delay="1600">
+							<a href="{{ path('app_register') }}" class="link mr-20 color-heading">
+								Inscription 
+							</a>
+							<a href="{{path('app_login')}}" class="btn sm action-1">
+								Connexion
+							</a>
+						</div>
+					</div>
+				</div>
+			</nav>
+<!-- Form 2 -->
+	<section class="bg-light form_2">
+		<div class="container px-xl-0">
+			<div class="row justify-content-center text-center text-md-left">
+				<div class="col-lg-5 col-md-6 col-sm-10">
+					<!--form action="traitement.php" method="post" class="pt-105 pb-100">
+						<h2 class="mb-45 small" data-aos="fade-up" data-aos-delay="0">
+							Pour prendre des rendez-vous , Inscrivez vous maintenant ! 
+						</h2>
+						<div data-aos="fade-up" data-aos-delay="0">
+							<div class="mb-10 f-14 semibold text-uppercase sp-20">
+								Identifiant
+							</div>
+							<input type="text" name="name" placeholder="exemple: prenom_nom" required="required" class="input mb-25 w-full lg border-gray focus-action-1 color-heading placeholder-gray text-center text-md-left">
+						</div>
+						<div data-aos="fade-up" data-aos-delay="0">
+							<div class="mb-10 f-14 semibold text-uppercase sp-20">
+								Email
+							</div>
+							<input type="email" name="email" placeholder="votre email" required="required" class="input mb-25 w-full lg border-gray focus-action-1 color-heading placeholder-gray text-center text-md-left">
+						</div>
+						<div data-aos="fade-up" data-aos-delay="0">
+							<div class="mb-10 f-14 semibold text-uppercase sp-20">
+								Mot de passe
+							</div>
+							<input type="password" name="password" placeholder="mot de passe" required="required" class="input mb-25 w-full lg border-gray focus-action-1 color-heading placeholder-gray text-center text-md-left">
+							<div class="mb-10 f-14 semibold text-uppercase sp-20">
+								Confirmation du mot de passe
+							</div>
+							<input type="password" name="passwordC" placeholder="confirmer le mot de passe" required="required" class="input mb-25 w-full lg border-gray focus-action-1 color-heading placeholder-gray text-center text-md-left">
+						</div>
+						<div class="mt-25 d-flex flex-wrap align-items-center buttons" data-aos="fade-up" data-aos-delay="0">
+							<input type="button" value="Inscription" name="s_inscrire" class="btn mr-20 mb-20 mb-xl-0 w-210 lg action-1">
+								
+						</div>
+					</form-->
+				</div>
+			
+				<div class="col-lg-6 col-md-5 d-none d-md-block overflow-hidden img_holder" data-aos="fade-up" data-aos-delay="1200">
+				<img src="{{ asset('uploads/e0ce35c7af4fc7e17fcb3e2b33abc54e.jpg')}}" alt="" class="h-full absolute">
+				</div>
+			</div>
+		</div>
+	</section>
+		
+	
+		
+{% endblock %}
+
