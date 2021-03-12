@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
+
 {% block head %}
     {% block title %}Log in!{% endblock %}
     {% block stylesheet %}{% endblock %}
+  
 {% endblock %}
 
 {% block body %}
+  <div class="form-group col-lg-6">
 <form method="post">
     {% if error %}
         <div class="alert alert-danger rounded mb-3">
@@ -12,6 +15,7 @@
         </div>
     {% endif %}
  <h1>Connectez-vous maintenant ! </h1>
+</br>
     <div class="form-group">
         <label for="exampleInputEmail1">
             Email
@@ -21,10 +25,10 @@
     </div>
 
        <div class="form-group">
-       <label for="inputPassword" class="col-sm-2 col-form-label">
+       <label for="inputPassword" >
             Mot de passe
        </label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Enter votre mot de passe"required autofocus>
     </div>
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"
     >
@@ -40,17 +44,22 @@
 
 
         <div>
-        <a href="#">Mot de passe oublier?</a>
+        <a href="{{path('app_forgot_password_request')}}">Mot de passe oublier?</a>
       </div>
     <div>
         Vous n'avez pas de compte?<a href="{{path('app_register')}}">Inscrivez-vous</a>
     </div>  
-   <div class="d-grid gap-2 col-6 mx-auto"data-aos="fade-up" data-aos-delay="0">
-     <button type="submit"  class="btn btn-warning" color="$orange-500">
-        Sign in
+  </br>
+   <div class="d-grid gap-2 col-10 mx-auto"data-aos="fade-up" data-aos-delay="0">
+     <button type="submit"  class="btn btn-primary btn-block" color="$orange-500">
+        CONNEXION
      </button>
     </div>
-            
+           
     
 </form>
+</div>
+<SPAN style="position: absolute; top: 10px; left: 55%;">
+<img src="uploads/e0ce35c7af4fc7e17fcb3e2b33abc54e.jpg"width="550" height="680" alt="" class="w-full" data-aos="fade-up" data-aos-delay="0">
+</SPAN>
 {% endblock %}

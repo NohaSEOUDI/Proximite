@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PriseRdvController!{% endblock %}
+
+{% block body %}
+
+ {{ include('Layouts/partials/_nav.html.twig') }}
+
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .container  { justify-content: center; flex-wrap: wrap; display: inline-flex;  grid-gap: 2px 2em;}
+</style>
+
+    
+
+   </br>
+   </br>
+
+ <div class="container mb-3 form-check">
+
+{% for r in rdv %}
+<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+  <div class="card-header">Rdv numero   {{ loop.index }} </div>
+  <div class="card-body">
+      Type de survice : {{ r.typeService }}</br>
+      Avec : {{ r.NomF }} </br>
+      heure: {{ r.heure }} h </br>
+      Lieu: {{ r.adresse }} </br>
+
+      <a class="btn btn-primary" role="button" href="#">Modifier</a>
+      
+      
+
+  <a href="#" onclick="event.preventDefault(); confirm('Êtes-vous sûr d\'annuler ce RDV?') && document.getElementById('js-pin-delete-form').submit();" class="btn btn-primary">Annuler</a>
+
+  <form id="js-pin-delete-form" action="{{ path('app_rdv_delete', {id: r.id}) }}" method="post" style="display: none;">   
+  <input type="hidden" name="_method" value="DELETE">
+  </form> 
+
+  </div>
+</div>
+</br>
+
+{% endfor %}
+</div>
+{% endblock %}
