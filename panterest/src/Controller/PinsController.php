@@ -215,7 +215,7 @@ class PinsController extends AbstractController
         }
         
         return $this->render('pins/addCalendrier.html.twig',[
-            'formCal' => $form->createView() 
+            'formCalendrier' => $form->createView() 
         ]);	
         
     }

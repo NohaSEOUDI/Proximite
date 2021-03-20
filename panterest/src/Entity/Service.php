@@ -47,17 +47,18 @@ class Service
      */
     private $tarif;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Fournisseur::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $fournisseur;
+    
 
     /**
      * @ORM\ManyToOne(targetEntity=TypeService::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Fournisseur::class, cascade={"persist", "remove"})
+     */
+    private $fournisseur;
 
 
     public function getId(): ?int
@@ -137,17 +138,6 @@ class Service
         return $this;
     }
 
-    public function getFournisseur(): ?Fournisseur
-    {
-        return $this->fournisseur;
-    }
-
-    public function setFournisseur(Fournisseur $fournisseur): self
-    {
-        $this->fournisseur = $fournisseur;
-
-        return $this;
-    }
 
     public function getType(): ?TypeService
     {
@@ -164,5 +154,17 @@ class Service
     public function __toString()
     {
         return $this->getId();
+    }
+
+    public function getFournisseur(): ?Fournisseur
+    {
+        return $this->fournisseur;
+    }
+
+    public function setFournisseur(?Fournisseur $fournisseur): self
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
     }
 }

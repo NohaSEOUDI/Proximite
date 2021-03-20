@@ -38,7 +38,11 @@ class Reservation
     private $duree;
 
     /**
+<<<<<<< HEAD
      * @ORM\ManyToOne(targetEntity=Service::class)
+=======
+     * @ORM\OneToOne(targetEntity=Service::class, cascade={"persist", "remove"})
+>>>>>>> 787ebf79c5180ec671e6a0c4757ba29d328c8338
      */
     private $service;
 
