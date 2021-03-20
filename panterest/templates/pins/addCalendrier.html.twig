@@ -2,87 +2,60 @@
 
 {% block body %}
    
-    {{ form_start(formLundi) }}
-    {{ form_start(formMardi) }}
-    {{ form_start(formMercredi) }}
-    {{ form_start(formJeudi) }}
-    {{ form_start(formVendredi) }}
-    {{ form_start(formSamedi) }}
-    {{ form_start(formDimanche) }}
-    
-    
-     <table class="table table-hover">
+    {{ form_start(formCal) }}
+   
+      
+      <table class="table table-hover">
   <thead>
     <tr>
       <th scope="col"></th>
-      <th scope="col">Heure de debut am</th>
-      <th scope="col">Heure de fin am</th>
-      <th scope="col">Heure de début pm</th>
-      <th scope="col">Heure de fin pm</th>
+      <th scope="col">Heure de debut </th>
+      <th scope="col">Heure de fin </th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">Lundi</th>
-      <td>{{ form_row(formLundi.heureDebutAm) }}</td>
-      <td>{{ form_row(formLundi.heureFinAm) }}</td>
-      <td>{{ form_row(formLundi.heureDebutPm) }}</td>
-      <td>{{ form_row(formLundi.heureFinPm) }}</td>
+      <td>{{ form_row(formCal.lundiDebut) }}</td>
+      <td>{{ form_row(formCal.lundiFin) }}</td>
     </tr>
     <tr>
       <th scope="row">Mardi</th>
-      <td>{{ form_row(formMardi.heureDebutAm) }}</td>
-      <td>{{ form_row(formMardi.heureFinAm) }}</td>
-      <td>{{ form_row(formMardi.heureDebutPm) }}</td>
-      <td>{{ form_row(formMardi.heureFinPm) }}</td>
+      <td>{{ form_row(formCal.mardiDebut) }}</td>
+      <td>{{ form_row(formCal.mardiFin) }}</td>
     </tr>
     <tr>
       <th scope="row">Mercredi</th>
-      <td>{{ form_row(formMercredi.heureDebutAm) }}</td>
-      <td>{{ form_row(formMercredi.heureFinAm) }}</td>
-      <td>{{ form_row(formMercredi.heureDebutPm) }}</td>
-      <td>{{ form_row(formMercredi.heureFinPm) }}</td>
+      <td>{{ form_row(formCal.mercrediDebut) }}</td>
+      <td>{{ form_row(formCal.mercrediFin) }}</td>
     </tr>
     <tr>
       <th scope="row">Jeudi</th>
-      <td>{{ form_row(formJeudi.heureDebutAm) }}</td>
-      <td>{{ form_row(formJeudi.heureFinAm) }}</td>
-      <td>{{ form_row(formJeudi.heureDebutPm) }}</td>
-      <td>{{ form_row(formJeudi.heureFinPm) }}</td>
+      <td>{{ form_row(formCal.jeudiDebut) }}</td>
+      <td>{{ form_row(formCal.jeudiFin) }}</td>
     </tr>
     <tr>
       <th scope="row">Vendredi</th>
-      <td>{{ form_row(formVendredi.heureDebutAm) }}</td>
-      <td>{{ form_row(formVendredi.heureFinAm) }}</td>
-      <td>{{ form_row(formVendredi.heureDebutPm) }}</td>
-      <td>{{ form_row(formVendredi.heureFinPm) }}</td>
+      <td>{{ form_row(formCal.vendrediDebut) }}</td>
+      <td>{{ form_row(formCal.vendrediFin) }}</td>
     </tr>
     <tr>
       <th scope="row">Samedi</th>
-      <td>{{ form_row(formSamedi.heureDebutAm) }}</td>
-      <td>{{ form_row(formSamedi.heureFinAm) }}</td>
-      <td>{{ form_row(formSamedi.heureDebutPm) }}</td>
-      <td>{{ form_row(formSamedi.heureFinPm) }}</td>
+      <td>{{ form_row(formCal.samediDebut) }}</td>
+      <td>{{ form_row(formCal.samediFin) }}</td>
     </tr>
      <tr>
       <th scope="row">Dimanche</th>
-      <td>{{ form_row(formDimanche.heureDebutAm) }}</td>
-      <td>{{ form_row(formDimanche.heureFinAm) }}</td>
-      <td>{{ form_row(formDimanche.heureDebutPm) }}</td>
-      <td>{{ form_row(formDimanche.heureFinPm) }}</td>
+      <td>{{ form_row(formCal.dimancheDebut) }}</td>
+      <td>{{ form_row(formCal.dimancheFin) }}</td>
     </tr>
   
  </tbody>
-</table>
+</table> 
+
+    <button type="submit" class="btn btn-primary">Terminer l'inscription</button>
+    {{ form_end(formCal) }}
     
-    <button type="submit" class="btn btn-primary">Enregistrer et passer à la suite</button>
-    {{ form_end(formLundi) }}
-    {{ form_end(formMardi) }}
-    {{ form_end(formMercredi) }}
-    {{ form_end(formJeudi) }}
-    {{ form_end(formVendredi) }}
-    {{ form_end(formSamedi) }}
-    {{ form_end(formDimanche) }}
     
    
     {#{{form(formFournisseur)}} pour afficher le formulaire en entier #}
