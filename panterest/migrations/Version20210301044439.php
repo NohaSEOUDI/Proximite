@@ -14,7 +14,7 @@ final class Version20210301044439 extends AbstractMigration
 {
     public function isTransactional(): bool
 {
-    return false;
+    return true;
 }
     public function getDescription() : string
     {
