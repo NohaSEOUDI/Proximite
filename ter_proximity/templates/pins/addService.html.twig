@@ -1,12 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-   
+     <h2>Ajouter les informations de votre service</h2>
+
+     <div class="form-group col-lg-6">
     {{ form_start(formService) }}
      {{ form_widget(formService) }}
     <button type="submit" class="btn btn-primary">Enregistrer et passer à la suite</button>
+</div>
     {{ form_end(formService) }}
     
-    
+   <SPAN style="position: absolute; top: 10px; left: 55%;">
+ <img src="/uploads/e0ce35c7af4fc7e17fcb3e2b33abc54e.jpg" width="550" height="680" alt="" class="w-full" data-aos="fade-up" data-aos-delay="0">
+</SPAN>
     {#{{form(formFournisseur)}} pour afficher le formulaire en entier #}
 {% endblock %}

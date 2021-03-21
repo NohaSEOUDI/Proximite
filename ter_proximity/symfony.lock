@@ -2,6 +2,9 @@
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
+    "cweagans/composer-patches": {
+        "version": "1.7.0"
+    },
     "dnoegel/php-xdg-base-dir": {
         "version": "v0.1.1"
     },

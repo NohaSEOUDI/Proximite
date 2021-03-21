@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\FournisseurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=FournisseurRepository::class)
+ *
  */
 class Fournisseur
 {
@@ -37,7 +40,17 @@ class Fournisseur
      */
     private $prenom;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $politique;
 
+
+    public function __toString()
+    {
+    return (string) $this->getId();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +100,18 @@ class Fournisseur
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getPolitique(): ?string
+    {
+        return $this->politique;
+    }
+
+    public function setPolitique(string $politique): self
+    {
+        $this->politique = $politique;
 
         return $this;
     }

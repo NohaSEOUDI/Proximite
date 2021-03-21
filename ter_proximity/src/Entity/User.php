@@ -56,9 +56,14 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
+    public function __toString()
+    {
+    return (string) $this->getId();
+    }
+
     public function getId(): ?int
     {
-        return $this->id;
+        return (string)$this->id;
     }
 
     public function getUuid(): ?string
@@ -107,7 +112,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -160,4 +165,5 @@ class User implements UserInterface
 
         return $this;
     }
+
 }
