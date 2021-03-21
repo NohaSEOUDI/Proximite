@@ -37,18 +37,9 @@ class PinsController extends AbstractController
      */
     public function index(PinRepository $rep): Response
     {	
-        
-             $repository1 = $this->getDoctrine()->getRepository(Fournisseur::class);
-             $fournisseurs = $repositor1->findAll();
-             $repository2 = $this->getDoctrine()->getRepository(TypeService::class);
-             $types = $repositor2->findAll();
-             $repository3 = $this->getDoctrine()->getRepository(Service::class);
-             $services = $repositor3->findAll();
-
-              
-                 return $this->render('DoctixFrontBundle:Front:list.html.twig',array(
-                     'fournisseurs' => $medecins,
-                 ));
+        return $this->render('DoctixFrontBundle:Front:list.html.twig',array(
+            'fournisseurs' => $medecins,
+        ));
       
         return $this->render('pins/index.html.twig');
     }
@@ -218,6 +209,14 @@ class PinsController extends AbstractController
             'formCalendrier' => $form->createView() 
         ]);	
         
+    }
+
+    /**
+     * @Route("/pins/showCalendar",name="app_show_calendar",methods={"Get","POST"})
+     */
+    public function showCalendar(): Response
+    {	
+        return $this->render('pins/showCalendar.html.twig');
     }
  
 }
