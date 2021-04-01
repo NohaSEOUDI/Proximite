@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Fournisseur;
 use App\Entity\Reservation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+use App\Entity\Product;
 /**
  * @method Reservation|null find($id, $lockMode = null, $lockVersion = null)
  * @method Reservation|null findOneBy(array $criteria, array $orderBy = null)
@@ -34,17 +35,30 @@ class ReservationRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+$query =  $this->createQueryBuilder('a')
+    ->select('a.id, a.name, v.name')
+      ->join('a.ville', 'v')
+      ->andWhere('a.created_at BETWEEN :dateOne AND :dateTwo')
+      ->andWhere('v.name = "Troyes"')
+      ->setParameters([
+         'dateOne' => $dateOne,
+         'dateTwo' => $dateTwo
+      ])
+
     */
 
-    /*
-    public function findOneBySomeField($value): ?Reservation
+    
+    public function findOneBySomeField($value): ?string
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
+        return $this->createQueryBuilder('r')//alias r comme reservation
+            ->select('f.politique')
+            ->join('App\Entity\Fournisseur','f')
+            ->andWhere('f.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+    //SELECT f.politique FROM App\Entity\Reservation r INNER JOIN App\Entity\Fournisseur WHERE f.id = :val
 }

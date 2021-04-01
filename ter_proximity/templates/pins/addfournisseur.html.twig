@@ -3,15 +3,19 @@
 {% block body %}
   <h2>Inscrivez-vous pour publier votre annonce.</h2>
 </br>
-     <div class="form-group col-lg-6">
+   <div class="form-group col-lg-6">
     {{ form_start(formFournisseur) }}{# balise ouvrante du form avec la methode et l'action #}
      {{ form_row(formFournisseur.nom,{'attr':{'placeholder': "votre nom"}}) }}
      {{ form_row(formFournisseur.prenom,{'attr':{'placeholder': "votre prenom"}}) }}
     {{ form_row(formFournisseur.email,{'attr':{'placeholder': "votre email"}}) }}
     {{ form_row(formFournisseur.password,{'attr':{'placeholder': "votre mot de passe"}}) }}
+     
     {{ form_row(formFournisseur.politique,{'attr':{'placeholder': "votre politique"}}) }}
-  
-    </div>
+    <SPAN style="position: absolute; top: 80%; left: 55%;">
+    {{ form_row(formFournisseur.frais,{'attr':{'style' : 'width:90px','rows' : '2','cols' : '15'}}) }}
+    </SPAN>
+  </div>
+   
     
     <!--div class="form-group col-lg-6">
       <label for="">Confirmation du mot de passe</label>

@@ -5,6 +5,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Entity\Pin;
 use App\Entity\User;
 use App\Repository\PinRepository;
+use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,7 +35,7 @@ class PinsController extends AbstractController
     /**
      * @Route("/",name="app_home",methods={"Get","POST"})
      */
-    public function index(PinRepository $rep): Response
+    public function index(ReservationRepository $priseRdv): Response
     {	
         /*$Auth=new Auth;
        // $Auth->setId(1);
@@ -44,8 +45,9 @@ class PinsController extends AbstractController
         $em=$this->getDoctrine()->getManager();
         $em->persist($Auth);
         $em->flush();*/
-      
-        return $this->render('pins/index.html.twig');
+       $Reservations= $priseRdv->findAll();
+        return $this->render('pins/index.html.twig',compact('Reservations'));
+        //return $this->render('pins/index.html.twig');
     }
      /**
      * @Route("/app_login",name="app_login" ,methods="POST")

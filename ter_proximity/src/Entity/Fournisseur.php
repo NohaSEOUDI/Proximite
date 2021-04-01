@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=FournisseurRepository::class)
- *
+ * 
  */
 class Fournisseur
 {
@@ -44,6 +44,11 @@ class Fournisseur
      * @ORM\Column(type="string", length=255)
      */
     private $politique;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $frais;
 
 
     public function __toString()
@@ -112,6 +117,18 @@ class Fournisseur
     public function setPolitique(string $politique): self
     {
         $this->politique = $politique;
+
+        return $this;
+    }
+
+    public function getFrais(): ?int
+    {
+        return $this->frais;
+    }
+
+    public function setFrais(?int $frais): self
+    {
+        $this->frais = $frais;
 
         return $this;
     }

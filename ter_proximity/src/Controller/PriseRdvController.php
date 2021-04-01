@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class PriseRdvController extends AbstractController
 {
@@ -37,7 +39,7 @@ class PriseRdvController extends AbstractController
    *@Route("/prise/rdv/{id}",name="app_rdv_delete",methods="GET|Delete")
    * 
    */
-    public function delete(Request $request,Reservation $r,EntityManagerInterface $em): Response
+    public function delete(Fournisseur $f,Request $request,Reservation $r,EntityManagerInterface $em): Response
     {
      
       $article=$em->getRepository(Reservation::class);
@@ -45,11 +47,17 @@ class PriseRdvController extends AbstractController
         throw new Exception("Error Processing Request :".$r);
         
       }
+      switch($f->getPolitique()){
+         case 'Pas de possibilité dannulation une fois le client a réservé':
+             $this->addFlash('error','Vous n\'avez pas le droit d\'annuler le rdv');
+             $this->redirectToRoute('app_rdv');
+             break;
+        default :
+         $em->remove($r);
+         $em->flush();
+         $this->addFlash('success', 'Votre rdv a bien été annulé !');
 
-      $em->remove($r);
-      $em->flush();
-      $this->addFlash('succes', 'Votre rdv a bien été annulé !');
-
+      }
     
       return $this->redirectToRoute('app_rdv'); 
 
@@ -58,14 +66,29 @@ class PriseRdvController extends AbstractController
  
     /**
      *@Route("/prise/rdv/{id}/edit",name="app_rdv_edit",methods="GET|Delete", requirements={"id":"\d+"})
-     * 
+     *
      */
-    public function edit(Request $request,Fournisseur $f,Reservation $r,EntityManagerInterface $em): Response
+    public function edit($id,ReservationRepository $priseRdv,Request $request,Fournisseur $f,Reservation $r,EntityManagerInterface $em): Response
    {    
-    
-      //$form->handleRequest($request);
-      //if ($form->isSubmitted() && $form->isValid()){
-        switch($f->getPolitique()){
+   // $var=$priseRdv->findOneBySomeField($r->getId());
+    //dd($var);
+    $pol="SELECT politique from fournisseur,Reservations where Reservations.fournisseur_id=fournisseur.id";
+    /*$stmt=$this->getDoctrine()->getManager()->getConnection()->prepare($pol);
+   ;
+     
+    //dd($stmt->execute()->fetchAll());
+ $query =  $this->createQueryBuilder('a')
+      ->select('a.id, a.name, v.name')
+      ->join('a.ville', 'v')
+      ->andWhere('a.created_at BETWEEN :dateOne AND :dateTwo')
+      ->andWhere('v.name = "Troyes"')
+      ->setParameters([
+         'dateOne' => $dateOne,
+         'dateTwo' => $dateTwo
+      ])
+      ->getQuery()
+      ->getResult();*/
+       switch($f->getPolitique()){
             case 'Nécessite de payement dun acompte pour toute réservation':
              $this->addFlash('info','Vous devez payer un acompte pour toute réservation');
                $this->redirectToRoute('app_rdv');
@@ -82,8 +105,10 @@ class PriseRdvController extends AbstractController
               ]);
               break;
             case 'Possibilité de modification sans frais':
-              $this->addFlash('succes','Vous pouvez modifier votre rdv');
-             // return $this->redirectToRoute('app_add_calendrier');
+              $this->addFlash('success','Vous pouvez modifier votre rdv sans frais');
+              //return $this->render('pins/prise_rdv');
+              return $this->redirectToRoute('app_rdv');
+              //return $this->redirectToRoute('app_add_calendrier');
               break;
 
             default :
@@ -92,7 +117,7 @@ class PriseRdvController extends AbstractController
               return $this->redirectToRoute('app_rdv');
         }
       //}
-        /*return $this->render('pins/prise_rdv/edit.html.twig',
+       /* return $this->render('pins/prise_rdv/edit.html.twig',
           ['Reservations'=>$r]
         );*/
         
