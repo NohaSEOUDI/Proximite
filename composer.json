@@ -1,0 +1,5 @@
+{
+    "require": {
+        "doctrine/doctrine-migrations-bundle": "^3.0"
+    }
+}
