@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   
+{{ form_start(formCalendrier) }}
+
+   
+      
+      <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Heure de debut </th>
+      <th scope="col">Heure de fin </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Lundi</th>
+      <td>{{ form_row(formCalendrier.lundiDebut) }}</td>
+      <td>{{ form_row(formCalendrier.lundiFin) }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Mardi</th>
+      <td>{{ form_row(formCalendrier.mardiDebut) }}</td>
+      <td>{{ form_row(formCalendrier.mardiFin) }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Mercredi</th>
+      <td>{{ form_row(formCalendrier.mercrediDebut) }}</td>
+      <td>{{ form_row(formCalendrier.mercrediFin) }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Jeudi</th>
+      <td>{{ form_row(formCalendrier.jeudiDebut) }}</td>
+      <td>{{ form_row(formCalendrier.jeudiFin) }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Vendredi</th>
+      <td>{{ form_row(formCalendrier.vendrediDebut) }}</td>
+      <td>{{ form_row(formCalendrier.vendrediFin) }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Samedi</th>
+      <td>{{ form_row(formCalendrier.samediDebut) }}</td>
+      <td>{{ form_row(formCalendrier.samediFin) }}</td>
+    </tr>
+     <tr>
+      <th scope="row">Dimanche</th>
+      <td>{{ form_row(formCalendrier.dimancheDebut) }}</td>
+      <td>{{ form_row(formCalendrier.dimancheFin) }}</td>
+
+    </tr>
+  
+ </tbody>
+</table> 
+
+    <button type="submit" class="btn btn-primary">Terminer l'inscription</button>
+
+    {{ form_end(formCalendrier) }}
+
+    
+    
+   
+    {#{{form(formFournisseur)}} pour afficher le formulaire en entier #}
+{% endblock %}

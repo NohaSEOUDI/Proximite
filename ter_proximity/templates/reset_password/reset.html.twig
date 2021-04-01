@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+    <h2>Reset your password</h2>
+ <div class="form-group col-lg-6">
+    {{ form_start(resetForm) }}
+        {{ form_row(resetForm.plainPassword) }}
+         <div class="d-grid gap-2 col-10 mx-auto" data-aos="fade-up" data-aos-delay="0">
+        <button type="submit"  class="btn btn-primary btn-block">Reset password</button>
+    </div>
+    {{ form_end(resetForm) }}
+</div>
+ <SPAN style="position: absolute; top: 10px; left: 55%;">
+      <img align="right" src="/uploads/e0ce35c7af4fc7e17fcb3e2b33abc54e.jpg"  class="w-full" width="550" height="680" data-aos="fade-up" data-aos-delay="0">
+  </SPAN>
+{% endblock %}

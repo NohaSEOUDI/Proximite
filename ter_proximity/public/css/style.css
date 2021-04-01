@@ -1,0 +1,120 @@
+@import 'framework.min.css';
+
+/* 1. Common styles */
+body {
+  font-family: Open Sans, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #9E8A73;
+  background: red;
+  -webkit-font-smoothing: antialiased;
+}
+body.dev {
+  background: #ccc;
+  min-height: 10000px;
+}
+
+nav, header, section, footer {
+  position: relative;
+}
+
+header, section, [data-bg-src], [data-bg-src-2x] {
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+header, section {
+  overflow: hidden;
+}
+
+header nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+nav {
+  width: 100%;
+}
+nav.transparent {
+  background: transparent;
+}
+
+a, button {
+  cursor: pointer;
+  transition: all 0.25s;
+}
+a:hover, button:hover {
+  text-decoration: none;
+}
+a:active, a:focus, button:active, button:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+button {
+  border: none;
+  outline: none !important;
+}
+
+input, textarea {
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #9E8A73;
+  resize: none;
+}
+
+label {
+  margin-bottom: 0;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  margin: 0;
+  font-weight: 700;
+  font-family: Playfair Display, Helvetica, Arial, sans-serif;
+}
+
+h1, h2 {
+  font-size: 58px;
+  line-height: 70px;
+}
+h1.big, h2.big {
+  font-size: 72px;
+  line-height: 86px;
+}
+h1.small, h2.small {
+  font-size: 42px;
+  line-height: 52px;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 42px;
+  line-height: 52px;
+}
+
+b, strong {
+  font-weight: 700;
+}
+
+.alert {
+  display: none;
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 970px;
+  z-index: 2000;
+}
+.alert-dismissable .close, .alert-dismissible .close {
+  top: 0;
+}
