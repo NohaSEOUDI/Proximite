@@ -36,18 +36,25 @@ class PriseRdvController extends AbstractController
     }
 
    /**
-   *@Route("/prise/rdv/{id}",name="app_rdv_delete",methods="GET|Delete")
+   *@Route("/prise/rdv/{id}",name="app_rdv_delete",methods="GET|Delete",
+   requirements={"id":"\d+"})
    * 
    */
-    public function delete(Fournisseur $f,Request $request,Reservation $r,EntityManagerInterface $em): Response
+    public function delete($id,ReservationRepository $priseRdv,Request $request,Reservation $r,EntityManagerInterface $em): Response
     {
+      //dd($id);
+    $var=$priseRdv->findOneBySomeField($id);//fonction qui retourne un Array 
+   // dd($var);
+    $value=$var["politique"];//je récupere la valeur
+    //dd($value);
+
      
       $article=$em->getRepository(Reservation::class);
       if(is_null( $r)){
         throw new Exception("Error Processing Request :".$r);
         
       }
-      switch($f->getPolitique()){
+      switch($value){
          case 'Pas de possibilité dannulation une fois le client a réservé':
              $this->addFlash('error','Vous n\'avez pas le droit d\'annuler le rdv');
              $this->redirectToRoute('app_rdv');
@@ -65,30 +72,18 @@ class PriseRdvController extends AbstractController
 
  
     /**
-     *@Route("/prise/rdv/{id}/edit",name="app_rdv_edit",methods="GET|Delete", requirements={"id":"\d+"})
+     *@Route("/prise/rdv/{id}/edit",name="app_rdv_edit",methods="GET|POST", requirements={"id":"\d+"})
      *
      */
     public function edit($id,ReservationRepository $priseRdv,Request $request,Fournisseur $f,Reservation $r,EntityManagerInterface $em): Response
    {    
-   // $var=$priseRdv->findOneBySomeField($r->getId());
+    //dd($id);
+    $var=$priseRdv->findOneBySomeField($id);//fonction qui retourne un Array 
     //dd($var);
-    $pol="SELECT politique from fournisseur,Reservations where Reservations.fournisseur_id=fournisseur.id";
-    /*$stmt=$this->getDoctrine()->getManager()->getConnection()->prepare($pol);
-   ;
-     
-    //dd($stmt->execute()->fetchAll());
- $query =  $this->createQueryBuilder('a')
-      ->select('a.id, a.name, v.name')
-      ->join('a.ville', 'v')
-      ->andWhere('a.created_at BETWEEN :dateOne AND :dateTwo')
-      ->andWhere('v.name = "Troyes"')
-      ->setParameters([
-         'dateOne' => $dateOne,
-         'dateTwo' => $dateTwo
-      ])
-      ->getQuery()
-      ->getResult();*/
-       switch($f->getPolitique()){
+    $value=$var["politique"];//je récupere la valeur
+    //dd($value);
+
+       switch($value){
             case 'Nécessite de payement dun acompte pour toute réservation':
              $this->addFlash('info','Vous devez payer un acompte pour toute réservation');
                $this->redirectToRoute('app_rdv');

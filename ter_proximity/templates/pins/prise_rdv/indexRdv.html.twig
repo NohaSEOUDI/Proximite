@@ -13,7 +13,6 @@
 </style>
 
     
-
    </br>
    </br>
 
@@ -25,25 +24,22 @@
   <div class="card-body">
       id Reservation: {{ r.id }}</br>
       id client :{{ r.client }}</br>
-      validee par fournisseur : {{ r.valideeParFournisseur }}</br>
-      id Type de survice : {{ r.service }}</br>
-      id fournisseur : {{ r.fournisseur}}</br>
+      Jour : {{ r.jour|date("j F  Y","Europe/Paris") }}</br>
+      Heure : {{ r.heure|date("g:ia")}}</br>
+      Id Type de survice : {{ r.service }}</br>
+      Id fournisseur : {{ r.fournisseur }}</br>
       Frais: {{ r.frais}}</br>
 
 
-      <a href="{{ path('app_rdv_edit', {id: r.id}) }}"class="btn btn-primary">Modifier</a>
+      <a href="{{ path('app_rdv_edit', {id: r.fournisseur }) }}"class="btn btn-primary">Modifier</a>
   
-  {#{<a href="{{ path('app_rdv_edit', {id: r.id}) }}" class="btn btn-primary">Modifier</a>
+   <a href="{{ path('app_rdv_delete', {id: r.fournisseur }) }}" class="btn btn-primary">Annuler</a>
 
-  <a href="#" onclick="event.preventDefault(); confirm('Êtes-vous sûr d\'annuler ce RDV?') && document.getElementById('js-pin-delete-form').submit();" class="btn btn-primary">Annuler</a>
 
-  <form id="js-pin-delete-form" action="{{ path('app_rdv_delete', {id: r.id}) }}" method="post" style="display: none;">   
-  <input type="hidden" name="_method" value="DELETE">
-  </form> }#}
+  </form> 
      
 
 
-  <a href="{{ path('app_rdv_delete', {id: r.id}) }}" class="btn btn-primary">Annuler</a>
  
 
 
