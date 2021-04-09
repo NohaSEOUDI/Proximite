@@ -1,6 +1,9 @@
-Après installation :  
+Après installation exécuter ces commandes:
 
-composer install /n
-yarn add --dev @symfony/webpack-encore/n
-yarn add webpack-notifier --dev/n
-yarn encore dev/n
+- composer install 
+- yarn add --dev @symfony/webpack-encore
+- yarn add webpack-notifier --dev
+- yarn encore dev
+
+
+ 
