@@ -6,4 +6,7 @@ Après installation exécuter ces commandes:
 - yarn encore dev
 
 
- 
+ Mise à jour : pour ajouter les fixture (fausses données de tests) :
+executer la commande "composer require doctrine/doctrine-fixtures-bundle --dev"
+sur un terminal puis la commande php bin/console doctrine:fixtures:load
+ensuite taper "yes"
