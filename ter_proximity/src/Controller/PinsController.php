@@ -141,7 +141,8 @@ class PinsController extends AbstractController
             'formFournisseur' => $form->createView() //passer une view du formulaire a twig pour qu'il l'affiche
         ]);//ensuite aller afficher ce formulaire dans la page twig correspondante
     }
-/**
+    
+    /**
      * @Route("/pins/addType/{idFournisseur}",name="app_add_type",methods={"Get","POST"})
      */
     public function addtype(Request $request, $idFournisseur): Response

@@ -61,4 +61,18 @@ $query =  $this->createQueryBuilder('a')
         ;
     }
     //SELECT f.politique FROM App\Entity\Reservation r INNER JOIN App\Entity\Fournisseur WHERE f.id = :val
+
+     /*id du fournisseur en de reservation 
+     fonction pour récuperer l'id du f 
+     public function findIdFournisseur($value): ?Array
+    {
+        return $this->createQueryBuilder('f')//alias r comme reservation
+            ->select('f.id')
+            ->join('App\Entity\Fournisseur','f')
+            ->andWhere('f.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }*/
 }

@@ -34,10 +34,19 @@ class PriseRdvController extends AbstractController
         $Reservations= $priseRdv->findAll();
         return $this->render('pins/prise_rdv/indexRdv.html.twig',compact('Reservations'));
     }
+    /**
+     * @Route("/prise/rdv/noter", name="app_rdv_noter",methods="GET|Delete")
+     */
+    public function noter(ReservationRepository $priseRdv,Request $request,EntityManagerInterface $em): Response
+    {
+       //$this->addFlash('success','Merci d\'avoir donnez votre avis');
+       //return $this->redirectToRoute('app_rdv');
+       return $this->render('pins/prise_rdv/noterF.html.twig');
+    }
 
    /**
-   *@Route("/prise/rdv/{id}",name="app_rdv_delete",methods="GET|Delete",
-   requirements={"id":"\d+"})
+    *@Route("/prise/rdv/{id}",name="app_rdv_delete",methods="GET|Delete",
+    requirements={"id":"\d+"})
    * 
    */
     public function delete($id,ReservationRepository $priseRdv,Request $request,Reservation $r,EntityManagerInterface $em): Response
@@ -72,7 +81,8 @@ class PriseRdvController extends AbstractController
 
  
     /**
-     *@Route("/prise/rdv/{id}/edit",name="app_rdv_edit",methods="GET|POST", requirements={"id":"\d+"})
+    *@Route("/prise/rdv/{id}/edit",name="app_rdv_edit",methods="GET|POST",
+    requirements={"id":"\d+"})
      *
      */
     public function edit($id,ReservationRepository $priseRdv,Request $request,Fournisseur $f,Reservation $r,EntityManagerInterface $em): Response
@@ -80,7 +90,7 @@ class PriseRdvController extends AbstractController
     //dd($id);
     $var=$priseRdv->findOneBySomeField($id);//fonction qui retourne un Array 
     //dd($var);
-    $value=$var["politique"];//je récupere la valeur
+    $value=$var["politique"];//je récupere la valeur de la politique 
     //dd($value);
 
        switch($value){
