@@ -48,11 +48,11 @@ $query =  $this->createQueryBuilder('a')
 
     */
 
-    //fonction qui me récupere la politique du F 
-    public function findOneBySomeField($value): ?Array
+    
+    public function findOneBySomeField($value): ?string
     {
         return $this->createQueryBuilder('r')//alias r comme reservation
-            ->select('Distinct f.politique')
+            ->select('f.politique')
             ->join('App\Entity\Fournisseur','f')
             ->andWhere('f.id = :val')
             ->setParameter('val', $value)

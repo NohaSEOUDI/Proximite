@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1>Veuillez choisir un créneau à réserver: </h1>
+    {# <form methode="" action="">  #}
+    {{form_start(formRdv)}}
+    {{form_row(formRdv.jour,{'attr':{'name': "date"}})}}
+    {# {{form_row(formRdv.heure,{'attr':{'id':"time",'value':"10:00"}})}} #}
+     <input  id="time" type="text" name="time" value="10:00">
+     <button type="submit" class="btn btn-primary">Prendre RDV</button>
+    
+      
+    
+  <script type="text/javascript">
+    
+    {# {% for key1,value1 in nondispo %}
+        l=[]
+            {% for key2,value2 in value1 %}
+                value={{value2|date('H')}}
+                l.push(value)
+            {% endfor %}
+            key={{key1|date('d/m/Y')}}
+        obj[key]=l
+    {% endfor %} #}
+
+    var min=00; var max=00;
+    appointement(min,max,["00:00"]);
+
+    $("input[id='reservation_jour']").change(function(){
+        const date = new Date($(this).val());
+        const day = date.getDay();
+        //alert(day)
+        D=getFormattedDate(date);
+       var obj = {{ nondispo|json_encode()|raw }};
+        horaire=["00:00"]
+        if(obj.hasOwnProperty(D)){
+            horaire=obj[D]
+        }
+        console.log(horaire);
+        
+        update(day,horaire);
+    
+    });
+
+    function update(day,horaire){
+        
+        switch (""+day) {
+            case "0"://dimanche
+                min={{calendrier.dimancheDebut|date('H') }}
+                max={{calendrier.dimancheFin|date('H') }}
+            
+                break;
+            case "1"://lundi
+                min={{calendrier.lundiDebut|date('H') }}
+                max={{calendrier.lundiFin|date('H') }}
+            
+                break;
+            case "2":
+                min={{calendrier.mardiDebut|date('H') }}
+                max={{calendrier.mardiFin|date('H') }}
+                
+                break;
+            case "3":
+                min={{calendrier.mercrediDebut|date('H') }}
+                max={{calendrier.mercrediFin|date('H') }}
+                
+                break;
+            case "4":
+                min={{calendrier.jeudiDebut|date('H') }}
+                max={{calendrier.jeudiFin|date('H') }}
+            
+                break;
+            case "5":
+                min={{calendrier.vendrediDebut|date('H') }}
+                max={{calendrier.vendrediFin|date('H') }}
+                
+                break;
+            case "6":
+                min={{calendrier.samediDebut|date('H') }}
+                max={{calendrier.samediFin|date('H') }}
+            
+                break;
+            default:
+                min=00;
+                max=00;
+        }
+        
+        appointement(min,max,horaire)
+    }
+    function appointement(min,max,horaire){
+        
+        html='<input id="time" name="time" type="text" value="10:00">'
+        $("#time").replaceWith(html);
+        var picker = new AppointmentPicker(document.getElementById('time'), {
+        interval: {{service.creneauBase}},
+        mode: '24h',
+        minTime: min,
+        maxTime: max,
+        startTime: 00,
+        endTime: 22,
+        disabled: horaire
+        });
+    }
+    function getFormattedDate(date) {
+        let year = date.getFullYear();
+        let month = (1 + date.getMonth()).toString().padStart(2, '0');
+        let day = date.getDate().toString().padStart(2, '0');
+
+        return day + '/' + month  + '/' + year;
+    }
+  </script>
+   {{form_end(formRdv)}}
+ {# </form> #}
+ 
+{% endblock %}

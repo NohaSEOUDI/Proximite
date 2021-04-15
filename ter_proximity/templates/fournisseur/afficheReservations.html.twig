@@ -1,0 +1,25 @@
+{% extends 'bases2.html.twig' %}
+{% block body %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Heure Debut</th>
+      <th scope="col">Heure Fin</th>
+      <th scope="col">Etat</th>
+      <th scope="col">Client</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for reservation in reservations %}
+        <tr>
+            <td>{{ reservation.jour|date('Y-m-d') }}</td>
+            <td>{{ reservation.start }}</td>
+            <td>{{ reservation.end }}</td>
+            <td>{{ reservation.etat }}</td>
+            <td>{{ reservation.client }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

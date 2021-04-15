@@ -3,13 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
-use Symfony\Component\Validator\Constraints\DateTime;
-use Symfony\Component\Validator\Constraints\DateTimeValidator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
- * @ORM\Table(name="Reservations")
  */
 class Reservation
 {
@@ -31,38 +28,37 @@ class Reservation
     private $jour;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $heure;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $duree;
 
     /**
-     *
      * @ORM\ManyToOne(targetEntity=Service::class)
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      */
     private $service;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     */
-    private $client;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Fournisseur::class)
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      */
     private $fournisseur;
+
+     /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
+     */
+    private $client;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $frais;
+
+
 
     public function getId(): ?int
     {
@@ -81,10 +77,8 @@ class Reservation
         return $this;
     }
 
-  
     public function getJour(): ?\DateTimeInterface
-    {   //$newDate = DateTime::createFromFormat("l dS F Y", $dateFromDB);
-        //$newDate = $newDate->format('d/m/Y');
+    {
         return $this->jour;
     }
 
@@ -95,24 +89,24 @@ class Reservation
         return $this;
     }
 
-    public function getHeure(): ?\DateTimeInterface
+    public function getHeure(): ?string
     {
         return $this->heure;
     }
 
-    public function setHeure(?\DateTimeInterface $heure): self
+    public function setHeure(?string $heure): self
     {
         $this->heure = $heure;
 
         return $this;
     }
 
-    public function getDuree(): ?\DateTimeInterface
+    public function getDuree(): ?int
     {
         return $this->duree;
     }
 
-    public function setDuree(?\DateTimeInterface $duree): self
+    public function setDuree(?int $duree): self
     {
         $this->duree = $duree;
 
@@ -131,18 +125,6 @@ class Reservation
         return $this;
     }
 
-    public function getClient(): ?User
-    {
-        return $this->client;
-    }
-
-    public function setClient(?User $client): self
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
     public function getFournisseur(): ?Fournisseur
     {
         return $this->fournisseur;
@@ -155,6 +137,18 @@ class Reservation
         return $this;
     }
 
+    public function getClient(): ?User
+    {
+        return $this->client;
+    }
+
+    public function setClient(?User $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+    
     public function getFrais(): ?int
     {
         return $this->frais;
@@ -166,4 +160,6 @@ class Reservation
 
         return $this;
     }
+
+
 }
