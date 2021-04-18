@@ -19,6 +19,7 @@
  <div class="container mb-3 form-check">
 
 {% for r in Reservations %}
+  {% if r.client==app.user %}
 <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
   <div class="card-header">Rdv numero   {{ loop.index }} </div>
   <div class="card-body">
@@ -31,9 +32,9 @@
       Frais: {{ r.frais}}</br>
 
 
-      <a href="{{ path('app_rdv_edit', {id: r.fournisseur }) }}"class="btn btn-primary">Modifier</a>
+      <a href="{{ path('app_rdv_edit', {id: r.id }) }}"class="btn btn-primary">Modifier</a>
   
-   <a href="{{ path('app_rdv_delete', {id: r.fournisseur }) }}" class="btn btn-primary">Annuler</a>
+   <a href="{{ path('app_rdv_delete', {id: r.id  }) }}" class="btn btn-primary">Annuler</a>
 
 
   </form> 
@@ -47,7 +48,7 @@
   </div>
 </div>
 </br>
-
+ {% endif %}
 {% endfor %}
 </div>
 {% endblock %}

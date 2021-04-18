@@ -7,7 +7,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Reservation;
 use App\Entity\Fournisseur;
+use App\Entity\User;
+use App\Entity\Notes;
+use App\Form\NotesType;
 use App\Repository\ReservationRepository;
+use App\Repository\UserRepository;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -27,22 +31,18 @@ class PriseRdvController extends AbstractController
    
 
     /**
-     * @Route("/prise/rdv", name="app_rdv")
+     * @Route("/prise/rdv/", name="app_rdv")
      */
-    public function index(ReservationRepository $priseRdv): Response
+    public function index(ReservationRepository $priseRdv,UserRepository $user): Response
     {
+       //$user=$this->getUser();
+       //$userId=$this->getId();
+       ///$id=$userId;
         $Reservations= $priseRdv->findAll();
         return $this->render('pins/prise_rdv/indexRdv.html.twig',compact('Reservations'));
     }
-    /**
-     * @Route("/prise/rdv/noter", name="app_rdv_noter",methods="GET|Delete")
-     */
-    public function noter(ReservationRepository $priseRdv,Request $request,EntityManagerInterface $em): Response
-    {
-       //$this->addFlash('success','Merci d\'avoir donnez votre avis');
-       //return $this->redirectToRoute('app_rdv');
-       return $this->render('pins/prise_rdv/noterF.html.twig');
-    }
+
+    
 
    /**
     *@Route("/prise/rdv/{id}",name="app_rdv_delete",methods="GET|Delete",
@@ -79,16 +79,43 @@ class PriseRdvController extends AbstractController
 
     }
 
- 
+    /**
+     * @Route("/prise/rdv/{id}/noter", name="app_rdv_noter",methods="GET|POST")
+     */
+    public function add(ReservationRepository $priseRdv,Request $request,Reservation $r): Response
+    { 
+
+      $notes=new Notes();
+      $form=$this->createForm(NotesType::class, $notes);
+      $form->handleRequest($request);
+      
+       if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager = $this->getDoctrine()->getManager();
+        //dd($r);
+       $notes->setClient($r->getClient());
+        $notes->setFournisseur($r->getFournisseur());
+        $entityManager->persist($notes);
+        $entityManager->flush();
+        $this->addFlash('success','Merci d\'avoir donnez votre avis');
+        //return $this->redirectToRoute('app_rdv');
+      }
+     // dd($notes);
+      return $this->render('pins/prise_rdv/noterF.html.twig',['form'=>
+      $form->createView()]);
+    }
+   
+
     /**
     *@Route("/prise/rdv/{id}/edit",name="app_rdv_edit",methods="GET|POST",
     requirements={"id":"\d+"})
-     *
-     */
-    public function edit($id,ReservationRepository $priseRdv,Request $request,Fournisseur $f,Reservation $r,EntityManagerInterface $em): Response
+    *
+    */
+    public function edit($id,ReservationRepository $priseRdv,Request $request,Reservation $r,EntityManagerInterface $em): Response
    {    
     //dd($id);
-    $var=$priseRdv->findOneBySomeField($id);//fonction qui retourne un Array 
+    $val=$r->getFournisseur()->getId();
+    //dd($val);
+    $var=$priseRdv->findOneBySomeField($val);//fonction qui retourne un Array 
     //dd($var);
     $value=$var["politique"];//je récupere la valeur de la politique 
     //dd($value);

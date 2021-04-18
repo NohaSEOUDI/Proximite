@@ -11,94 +11,22 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     .container  { justify-content: center; flex-wrap: wrap; display: inline-flex;  grid-gap: 2px 2em;}
 </style>
-
-   <form class="form-group col-lg-6">
-   	<h1 align="center"><B>Votre avis nous intéresse </B></h1></br>
-    <label><B>Avez-vous eu des problèmes lors de la prise de rdv ?*</B></label></br>
+<h1 class="d-grid gap-10 col-5 mx-auto"><B>Votre avis nous intéresse </B></h1></br>
+  <div  class="d-grid gap-10 col-5 mx-auto" >
+    {{ form_start(form) }}
    
-    <div class="form-group">
-      <div class="custom-control custom-radio">
-      <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked="">
-      <label class="custom-control-label" for="customRadio1">Oui</label>
-    </div>
-    <div class="custom-control custom-radio">
-      <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-      <label class="custom-control-label" for="customRadio2">Non</label>
-    </div>
-   </div>
+     {{ form_row(form.problemeRDV,{'attr':{'label': "votre nom"}}) }}
+     {{ form_row(form.prixService,{'attr':{'label': "votre nom"}}) }}
+     {{ form_row(form.niveauSatisfaction,{'attr':{'label': "votre nom"}}) }}
+     {{ form_row(form.utiliszerService,{'attr':{'label': "votre nom"}}) }}
+     {{ form_row(form.commentaire,{'attr':{'label': "votre nom"}}) }}
 
 
+    </div>
+    <div class="d-grid gap-2 col-5 mx-auto" data-aos="fade-up" data-aos-delay="0">
+    <button type="submit" class="btn btn-primary">Valider</button>
+      </div>
+    {{ form_end(form) }}
 
-    <label><B>Est-ce que le prix de service du fournisseur était convenable ?*</B></label></br>
-      <div class="form-group">
-      <div class="custom-control custom-radio">
-      <input type="radio" id="customRadio6" name="customRadioGr2" class="custom-control-input" checked="">
-      <label class="custom-control-label" for="customRadio6">Oui</label>
-    </div>
-    <div class="custom-control custom-radio">
-      <input type="radio" id="customRadio7" name="customRadioGr2" class="custom-control-input">
-      <label class="custom-control-label" for="customRadio7">Non</label>
-    </div>
-     
-   </div>
-
-    <label><B>Quel est le niveau de satisfaction globale de service de [nomService]*</B></label></br>
-     <div class="form-group">
-     <div class="custom-control custom-radio">
-      <input type="radio" id="customRadioN1" name="customRadioGrN" class="custom-control-input" checked="">
-      <label class="custom-control-label" for="customRadioN1">Très satisfiable</label>
-    </div>
-
-      <div class="custom-control custom-radio">
-      <input type="radio" id="customRadioN2" name="customRadioGrN" class="custom-control-input" checked="">
-      <label class="custom-control-label" for="customRadioN2">Satisfiable</label>
-    </div>
-    <div class="custom-control custom-radio">
-      <input type="radio" id="customRadioN3" name="customRadioGrN" class="custom-control-input" checked="">
-      <label class="custom-control-label" for="customRadioN3">Neutre</label>
-    </div>
-
-    <div class="custom-control custom-radio">
-      <input type="radio" id="customRadioN4" name="customRadioGrN" class="custom-control-input">
-      <label class="custom-control-label" for="customRadioN4">Insatisfaits</label>
-    </div>
-      <div class="custom-control custom-radio">
-      <input type="radio" id="customRadioN5" name="customRadioGrN" class="custom-control-input">
-      <label class="custom-control-label" for="customRadioN5">Très insatisfaits</label>
-    </div>
-     
-   </div>
-
-
-
-    <label><B>Utiliserz-vous notre service à l'avenir ?*</B></label></br>
-        <div class="form-group">
-      <div class="custom-control custom-radio">
-      <input type="radio" id="customRadio3" name="customRadioGr3" class="custom-control-input" checked="">
-      <label class="custom-control-label" for="customRadio3">Oui</label>
-    </div>
-    <div class="custom-control custom-radio">
-      <input type="radio" id="customRadio4" name="customRadioGr3" class="custom-control-input">
-      <label class="custom-control-label" for="customRadio4">Non</label>
-    </div>
-     <div class="custom-control custom-radio">
-      <input type="radio" id="customRadio5" name="customRadioGr3" class="custom-control-input">
-      <label class="custom-control-label" for="customRadio5">Peut-être</label>
-    </div>
-   </div>
-
-    
-     <div class="form-group">
-      <label for="exampleTextarea"><B>Auriez-vous des remarques ou suggestions d'amélioration ?</B></label>
-      <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-    </div>
-    {#{cette formulaire est entre fournisseur et client }#}
-
-    <button  type="submit"  class="btn btn-primary col-lg-5">Valider</button>
-   </form>
-    
- 
-   </br>
-   </br>
    <!--ici fomulaire pour payer son frai de modification-->
 {% endblock %}

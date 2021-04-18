@@ -1,0 +1,40 @@
+{% extends 'bases2.html.twig' %}
+{% block head %}
+ 
+{% endblock %}
+{% block stylesheets %}    
+   <style>
+        #calendrier{
+            width:80%;
+            margin:auto;
+        }
+    
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div id='calendar'></div>
+
+        
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          locale:'fr',
+          timeZone: 'Europe/Paris',
+          headerToolbar:{
+              start:'prev,next today',
+              center:'title',
+              end:'dayGridMonth,listWeek,timeGridDay'
+          },
+          events:{{data|raw}}
+         
+        });
+        calendar.render();
+      });
+
+    </script>
+{% endblock %}

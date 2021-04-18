@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='fr'>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous"> 
+        <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css"> 
+        {# <link rel="stylesheet" type="text/css" href="node_modules\jquery-datetimepicker\jquery.datetimepicker.css"/> #}
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            
+        {% block stylesheets %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="../../public/css/appointment-picker.css">
+        <script src="../../public/js/appointment-picker.js"></script>
+            {#{{ encore_entry_link_tags('app') }}#}
+        {% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js" integrity="sha256-ekrJn2FeZaiUFq99QswpQCUTME/HxaDfX7R8INzKJGE=" crossorigin="anonymous"></script>
+        {% block javascripts %}
+            
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#"> <big>Proximity</big> <small>Pro</small> </a>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Acceuil
+                <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Deconnexion</a>
+            </li>
+            
+            </ul>
+            
+        </div>
+        </nav>
+        <ul class="nav nav-pills flex-column">
+       <li class="nav-item">
+            <a class="nav-link" href="#">Consulter mon calendrier</a>
+        </li>
+
+        <li class="nav-item">
+            
+            <a class="nav-link" href="#">Rechercher de reservations</a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="#">modifier mes horaires</a>
+        </li>
+       
+        </ul>
+        <div class="container">
+            {% block body %}{% endblock %}
+            
+        </div>
+         
+        {# <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js%22%3E</script>
+        <script src="node_modules\jquery-datetimepicker\jquery.datetimepicker.js" ></script>
+        <script src="jquery.datetimepicker.js"></script> #} 
+        
+    </body>
+   
+</html>

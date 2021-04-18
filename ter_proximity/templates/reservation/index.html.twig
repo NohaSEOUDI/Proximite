@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!{% endblock %}
+
+{% block body %}
+
+<section class="reservations">
+
+    {% for reservation in reservations %}
+        <reservation>
+            </br>
+            <h2> Réservation : </h2>
+            <div class="idclient"> Mail du Client est : "{{ reservation.client.email }}". </div>
+            <div class="idfournisseur"> Mail du Fournisseur est : "{{ reservation.fournisseur.email }}". </div>
+            <div class="idservice"> Service est : "{{ reservation.service.titre }}". </div>
+            </br>
+            </br>
+
+        </reservation>
+    {% endfor %}
+
+{% endblock %}

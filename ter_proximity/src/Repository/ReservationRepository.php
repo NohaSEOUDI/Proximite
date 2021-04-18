@@ -48,7 +48,8 @@ $query =  $this->createQueryBuilder('a')
 
     */
 
-    //fonction qui me récupere la politique du F 
+    
+   //fonction qui me récupere la politique du F 
     public function findOneBySomeField($value): ?Array
     {
         return $this->createQueryBuilder('r')//alias r comme reservation
@@ -60,6 +61,7 @@ $query =  $this->createQueryBuilder('a')
             ->getOneOrNullResult()
         ;
     }
+
     //SELECT f.politique FROM App\Entity\Reservation r INNER JOIN App\Entity\Fournisseur WHERE f.id = :val
 
      /*id du fournisseur en de reservation 
