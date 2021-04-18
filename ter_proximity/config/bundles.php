@@ -17,5 +17,9 @@ return [
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+<<<<<<< HEAD
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
+=======
+    EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle::class => ['all' => true],
+>>>>>>> 3c6cd6e06023dce52128b82e891c5cccb6853712
 ];

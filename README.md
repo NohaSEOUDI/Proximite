@@ -10,3 +10,6 @@ Après installation exécuter ces commandes:
 executer la commande "composer require doctrine/doctrine-fixtures-bundle --dev"
 sur un terminal puis la commande php bin/console doctrine:fixtures:load
 ensuite taper "yes"
+
+Ajout du bundle pour création de l'interface de l'admin: 
+executez la commande: composer require easycorp/easyadmin-bundle
