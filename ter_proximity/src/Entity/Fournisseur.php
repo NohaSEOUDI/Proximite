@@ -50,6 +50,11 @@ class Fournisseur
      */
     private $frais;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $noteMoyenne;
+
 
     public function __toString()
     {
@@ -129,6 +134,18 @@ class Fournisseur
     public function setFrais(?int $frais): self
     {
         $this->frais = $frais;
+
+        return $this;
+    }
+
+    public function getNoteMoyenne(): ?int
+    {
+        return $this->noteMoyenne;
+    }
+
+    public function setNoteMoyenne(?float $noteMoyenne): self
+    {
+        $this->noteMoyenne = $noteMoyenne;
 
         return $this;
     }

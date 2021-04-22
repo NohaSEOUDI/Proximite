@@ -2,7 +2,10 @@
 
 
 {% block body %}
- <h1>Voici la liste des services disponibles: </h1>
+ {{ include('Layouts/partials/_nav.html.twig') }}
+ 
+ <h1 align="center"><B>La liste des services disponibles:</B> </h1></br>
+  <div  class="d-grid gap-10 col-5 mx-auto" >
 	{% for service in services %}
 		<div class="card mb-3" style="max-width: 540px;">
 			<div class="row no-gutters">
@@ -19,6 +22,7 @@
 		</div>
 	
 	{% endfor %}
+</div>
 
 {% endblock %}
 

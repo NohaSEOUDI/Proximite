@@ -59,6 +59,11 @@ class Reservation
      */
     private $frais;
 
+    /**
+     * @ORM\Column(type="boolean", length=255)
+     */
+    private $estHonore;
+
 
 
     public function getId(): ?int
@@ -158,6 +163,18 @@ class Reservation
     public function setFrais(?int $frais): self
     {
         $this->frais = $frais;
+
+        return $this;
+    }
+
+    public function getEstHonore(): ?bool
+    {
+        return $this->estHonore;
+    }
+    
+    public function setEstHonore(bool $estHonore): self
+    {
+        $this->estHonore = $estHonore;
 
         return $this;
     }

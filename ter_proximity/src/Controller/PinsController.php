@@ -33,6 +33,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Controller\Environment;
 use App\Repository\ReservationRepository;
+use App\Repository\NotesRepository;
+use App\Entity\Notes;
 
 
 class PinsController extends AbstractController
@@ -76,7 +78,9 @@ class PinsController extends AbstractController
         $form = $this->createForm(FournisseurType::class, $fournisseur);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid() ){
-            dump($request);
+           // dump($request);
+
+            
             $manager->persist($fournisseur);
             $manager->flush();
             return $this->redirectToRoute('app_add_type',['idFournisseur'  => $fournisseur->getId()]);

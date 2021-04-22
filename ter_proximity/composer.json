@@ -13,11 +13,8 @@
         "doctrine/doctrine-bundle": "^2.2",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
-<<<<<<< HEAD
-        "knplabs/knp-paginator-bundle": "^5.4",
-=======
         "easycorp/easyadmin-bundle": "^3.2",
->>>>>>> 3c6cd6e06023dce52128b82e891c5cccb6853712
+        "knplabs/knp-paginator-bundle": "^5.4",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/amazon-mailer": "5.2.*",
@@ -50,9 +47,7 @@
         "symfonycasts/reset-password-bundle": "^1.5",
         "symfonycasts/verify-email-bundle": "^1.2",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0",
-        "blackknight467/star-rating-bundle": "2.*"
-        
+        "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",

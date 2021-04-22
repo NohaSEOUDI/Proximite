@@ -5,6 +5,7 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
+        
         <a class="nav-link" href="{{ path('app_home') }}">Acceuil
           <span class="sr-only">(current)</span>
         </a>
@@ -12,7 +13,9 @@
       <li class="nav-item">
         <a class="nav-link" href="{{ path('app_show_services') }}">Services</a>
       </li>
+
      {% if app.user %}
+
       <li class="nav-item">
         <a class="nav-link" href="{{ path('app_rdv') }}">Mes RDV</a>
       </li>
@@ -25,6 +28,7 @@
 		          <form id="js-logout-form" action="{{ path('app_logout') }}" method="POST" style="display: none;">
 		            <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
 		          </form>
+
       </li>
 
 	{% else %}

@@ -4,14 +4,21 @@
 		<title>Project</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="css/style.css" rel="stylesheet" />
+		<style type="text/css">
+		.item {
+		    	display: none;
+		   		position: relative;
+		   	   .transition(.6s ease-in-out left);
+		}
+
+		</style>
 	{% endblock  %}
 {% block body %}
 
 
  {{ include('Layouts/partials/_nav.html.twig') }}
 			
-
-	<h1>Bonjour {{ app.user.uuid }}</h1>
+<h1 align="center"><B>Bonjour {{ app.user.uuid }}</B></h1>
 			
 
 		

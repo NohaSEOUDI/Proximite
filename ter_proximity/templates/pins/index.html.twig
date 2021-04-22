@@ -25,22 +25,25 @@
 							</a>
 						</div>
 						<div class="col-lg-6 text-center" data-aos="fade-up" data-aos-delay="1200">
-							<a href="#" class="link color-heading mx-15">
-								Acceuil
-							</a>
-							<a href="#" class="link color-heading mx-15">
+							
+							<a href="{{ path('app_show_services') }}" class="link color-heading mx-15">
 								Annonces
 							</a>
 						</div>
 
 		{% if app.user %}
+			    
 				 <div class="col-lg-3">
+		            <a class="btn sm action-1" href="https://127.0.0.1:8000/inscription">Espace personnel</a>
+		  
 		            <a class="btn sm action-1" href="#" onclick="event.preventDefault(); document.getElementById('js-logout-form').submit();">Logout</a>
 		         </div>
+		     
 
 		          <form id="js-logout-form" action="{{ path('app_logout') }}" method="POST" style="display: none;">
 		            <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
 		          </form>
+
 
 		 {% else %}
 						<div class="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-end align-items-center" data-aos="fade-up" data-aos-delay="1600">
@@ -70,7 +73,7 @@
 				</div>
 				<div class="mt-80 text-center buttons" data-aos="fade-up" data-aos-delay="800">
 					<div>
-						<a href=""  class="btn action-1 xl">
+						<a href="{{ path('app_show_services') }}" class="btn action-1 xl">
 							Rechercher un prestataire
 						</a>
 					</div>

@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Fournisseur;
+use App\Entity\Reservation;
 use App\Entity\Notes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -35,7 +37,19 @@ class NotesRepository extends ServiceEntityRepository
         ;
     }
     */
+    //$sql="select AVG(niveau_satisfaction) AS moyenne from notes where fournisseur_id=idFournisseur";
 
+
+    public function avgScore($idFournisseur){
+       return $this->createQueryBuilder('n')
+            ->select('AVG(n.niveauSatisfaction) as scoreMoyenne')
+            ->Where('n.fournisseur = :val')
+            ->setParameter('val', $idFournisseur)
+            ->getQuery()
+            ->getOneOrNullResult()
+            
+        ;
+    }
     /*
     public function findOneBySomeField($value): ?Notes
     {

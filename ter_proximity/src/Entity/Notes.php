@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\NotesRepository;
-//use Doctrine\Common\Collections\ArrayCollection;
-//use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,10 +52,6 @@ class Notes
      */
     private $commentaire;
 
-    /*public function __construct()
-    {
-        $this->client = new ArrayCollection();
-    }*/
 
     public function getId(): ?int
     {
@@ -87,29 +81,6 @@ class Notes
 
         return $this;
     }
-
-    /*
-      @return Collection|User[]
-     
-    public function getClient(): Collection
-    {
-        return $this->client;
-    }
-    public function addClient(User $client): self
-    {
-        if (!$this->client->contains($client)) {
-            $this->client[] = $client;
-        }
-
-        return $this;
-    }
-
-    public function removeClient(User $client): self
-    {
-        $this->client->removeElement($client);
-
-        return $this;
-    }*/
 
     public function getProblemeRDV(): ?int
     {
@@ -170,4 +141,5 @@ class Notes
 
         return $this;
     }
+
 }
