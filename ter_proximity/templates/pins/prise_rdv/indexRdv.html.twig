@@ -24,15 +24,19 @@
   <div class="card-header">Rdv numero   {{ loop.index }} </div>
   <div class="card-body">
       id Reservation: {{ r.id }}</br>
-      id client :{{ r.client }}</br>
+      Nom client :{{ r.client.Uuid }}</br>
       Jour : {{ r.jour|date("j F  Y","Europe/Paris") }}</br>
       Heure : {{ r.heure|date("g:ia")}}</br>
-      Id Type de survice : {{ r.service }}</br>
-      Id fournisseur : {{ r.fournisseur }}</br>
-      Frais: {{ r.frais}}</br>
+      Type de survice : {{ r.service.titre }}</br>
+      Nom fournisseur : {{ r.fournisseur.nom }}</br>
+      Frais: {{ r.frais }}</br>
       Etat: {{ r.estHonore }}</br>
 
   <a href="{{ path('app_rdv_edit', {id: r.id }) }}"class="btn btn-primary">Modifier</a>
+  
+    {% if r.estHonore==1 %}
+      <a href="{{ path('app_rdv_noter', {id: r.id }) }}"class="btn btn-primary">  Noter</a>
+    {% endif %}
   
    <a href="{{ path('app_rdv_delete', {id: r.id  }) }}" class="btn btn-primary">Annuler</a>
 

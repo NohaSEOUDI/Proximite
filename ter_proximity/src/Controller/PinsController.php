@@ -38,14 +38,14 @@ use App\Entity\Notes;
 
 
 class PinsController extends AbstractController
-{	private $em;
+{   private $em;
 
     /**
      * @Route("/",name="app_home",methods={"Get","POST"})
      *
      */
     public function index(ReservationRepository $priseRdv): Response
-    {	
+    {   
        $Reservations= $priseRdv->findAll();
         return $this->render('pins/index.html.twig',compact('Reservations'));
       
@@ -56,7 +56,7 @@ class PinsController extends AbstractController
      */
     public function create(Request $request,EntityManagerInterface $em): Response{
         
-    	return $this->render('pins/create.html.twig');
+        return $this->render('pins/create.html.twig');
     }
 
     /**
@@ -71,7 +71,7 @@ class PinsController extends AbstractController
      * @Route("/pins/addfournisseur",name="app_add_fournisseur",methods={"Get","POST"})
      */
     public function addfournisseur(Request $request): Response
-    {	
+    {   
         $manager = $this->getDoctrine()->getManager();
         $fournisseur= new Fournisseur();
 
@@ -95,7 +95,7 @@ class PinsController extends AbstractController
      * @Route("/pins/addType/{idFournisseur}",name="app_add_type",methods={"Get","POST"})
      */
     public function addtype(Request $request, $idFournisseur): Response
-    {	
+    {   
         $manager = $this->getDoctrine()->getManager();
         $type= new TypeService();
         
@@ -117,7 +117,7 @@ class PinsController extends AbstractController
      * @Route("/pins/addService/{idFournisseur}/{idType}",name="app_add_service",methods={"Get","POST"})
      */
     public function addservice(Request $request,$idFournisseur,$idType): Response
-    {	
+    {   
         $manager = $this->getDoctrine()->getManager();
         $service= new Service();
         
@@ -169,7 +169,7 @@ class PinsController extends AbstractController
         
         return $this->render('pins/addCalendrier.html.twig',[
             'formCalendrier' => $form->createView() 
-        ]);	
+        ]); 
         
     }
 
@@ -177,7 +177,7 @@ class PinsController extends AbstractController
      * @Route("/reservation/showServices",name="app_show_services",methods={"Get","POST"})
      */
     public function showServices(Request $request): Response
-    {	
+    {   
         
         $services = $this->getDoctrine()
         ->getRepository(Service::class)
@@ -199,7 +199,7 @@ class PinsController extends AbstractController
      * @Route("/reservation/showCalendar/{idS}",name="app_show_calendar",methods={"Get","POST"})
      */
     public function showCalendar(Request $request,$idS): Response
-    {	
+    {   
         
         $manager = $this->getDoctrine()->getManager();
         $service = $this->getDoctrine()
@@ -261,7 +261,7 @@ class PinsController extends AbstractController
      * @Route("/indexFournisseur",name="app_index_fournisseur",methods={"Get","POST"})
      */
     public function indexFournisseur(Request $request): Response
-    {	
+    {   
         return $this->render('fournisseur/indexFournisseur.html.twig');
 
     
@@ -271,7 +271,7 @@ class PinsController extends AbstractController
      * @Route("/fullCalendar/{idFournisseur}",name="app_fullCalendar",methods={"Get","POST"})
      */
     public function fullCalendar(Request $request,$idFournisseur): Response
-    {	
+    {   
         $manager = $this->getDoctrine()->getManager();
 
         $fournisseur = $this->getDoctrine()
@@ -320,7 +320,7 @@ class PinsController extends AbstractController
      * @Route("/afficheReservations/{idF}",name="app_affiche_reservation",methods={"Get","POST"})
      */
     public function afficheReservation(Request $request,$idF): Response
-    {	
+    {   
         $fournisseur = $this->getDoctrine()
         ->getRepository(Fournisseur::class)
         ->find($idF);

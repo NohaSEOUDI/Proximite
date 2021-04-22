@@ -80,22 +80,22 @@ class PriseRdvController extends AbstractController
       return $this->redirectToRoute('app_rdv'); 
 
     }
-    
-
 
 
     /**
-     * @Route("/prise/rdv/{id}/noter", name="app_rdv_noter",methods="GET|POST")
+     * @Route("/prise/rdv/{id}/noter",name="app_rdv_noter",methods="GET|POST")
+     *
      */
-    public function add(NotesRepository $NotesRep,ReservationRepository $priseRdv,Request $request,Reservation $r,Fournisseur $f): Response
+    public function add(NotesRepository $NotesRep,ReservationRepository $priseRdv,Request $request,Reservation $r): Response
     { //id dans le route celle du reservation
       if($r->getEstHonore()==0){
         $this->addFlash('error','Vous n\'avez pas le droit de noter');
         return $this->redirectToRoute('app_rdv');
       }
+      
 
       $notes=new Notes();
-     // $four=new fournisseur();
+      $f=new fournisseur();
       $form=$this->createForm(NotesType::class, $notes);
       $form->handleRequest($request);
       
@@ -108,13 +108,16 @@ class PriseRdvController extends AbstractController
         //le score moyenne du fournisseur en question 
          $moyenne=$NotesRep->avgScore($notes->getFournisseur());
          $value=$moyenne["scoreMoyenne"];
-         $f->setNoteMoyenne($value);
+         //dd($value);
+         $r->getFournisseur()->setNoteMoyenne($value);
          //---------------
         $entityManager->persist($notes);
         $entityManager->flush();
+         //dd($r->getFournisseur()->getNoteMoyenne());
         $this->addFlash('success','Merci d\'avoir donnez votre avis');
        return  $this->redirectToRoute('app_rdv');
        // dd($value);
+
       }
       
      // dd($notes);

@@ -60,7 +60,7 @@ class Reservation
     private $frais;
 
     /**
-     * @ORM\Column(type="boolean", length=255)
+     * @ORM\Column(type="boolean", length=255,nullable=true)
      */
     private $estHonore;
 
