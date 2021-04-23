@@ -77,6 +77,10 @@ class PinsController extends AbstractController
 
         $form = $this->createForm(FournisseurType::class, $fournisseur);
         $form->handleRequest($request);
+         if ($this->getUser()) {
+            $this->addFlash('error','Vous n\'avez pas le droit d\'accéder !');//car connecté en étant client
+             return $this->redirectToRoute('app_rdv');
+         }
         if($form->isSubmitted() && $form->isValid() ){
            // dump($request);
 
@@ -201,7 +205,7 @@ class PinsController extends AbstractController
   * @param User $idClient
   * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
  */
-    public function showCalendar(Request $request,$idS,User $idClient): Response
+    public function showCalendar(Request $request,$idS,User $idClient=null): Response
     {   //fonction qui ajoute le service en bbd
 
            // $user_id= $request->query()->get('user_id');
@@ -212,7 +216,7 @@ class PinsController extends AbstractController
 
        // dd($client);
         //dd($idClient->getId());
-        $IdClientVal=$idClient->getId();
+        //$IdClientVal=$idClient->getId();
         $service = $this->getDoctrine()
         ->getRepository(Service::class)
         ->find($idS);
@@ -244,7 +248,13 @@ class PinsController extends AbstractController
         //$nondispo=implode(",", $array);
         dump($nondispo);
         // dump($_POST["time"]);
-       
+          if ($this->getUser()==null) {
+            $this->addFlash('error','Vous devez vous connecter avant de prendre le RDV!');//a revoir 
+             return $this->redirectToRoute('app_login');
+         }
+         else{
+
+
         if($form->isSubmitted() && $form->isValid() ){
             $reservation->setClient($idClient);
             $reservation->setDuree($service->getCreneauBase());
@@ -255,9 +265,11 @@ class PinsController extends AbstractController
             dump($reservation);
             $manager->persist($reservation);
             $manager->flush();
+         $this->addFlash('success',"Merci, votre RDV a bien été enregistré !");
             return $this->redirectToRoute('app_show_services');
         }
 
+    }
         return $this->render('reservation/showCalendar.html.twig',[
             'calendrier' => $calendrier,
             'formRdv' => $form->createView(),

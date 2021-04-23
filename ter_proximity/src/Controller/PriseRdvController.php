@@ -135,6 +135,7 @@ class PriseRdvController extends AbstractController
     //dd($id);
 
     $val=$r->getFournisseur()->getId();
+    $idclient=$r->getClient()->getId();
     //dd($val);
     $var=$priseRdv->findOneBySomeField($val);//fonction qui retourne un Array 
     //dd($var);
@@ -160,12 +161,12 @@ class PriseRdvController extends AbstractController
             case 'Possibilité de modification sans frais':
               $this->addFlash('success','Vous pouvez modifier votre rdv sans frais');
               //return $this->render('pins/prise_rdv');
-              return $this->redirectToRoute('app_rdv');
+      //????return $this->redirectToRoute('app_show_calendar',array('idF'=>$val,'idS'=> $idclient));
               //return $this->redirectToRoute('app_add_calendrier');
               break;
 
             default :
-             $this->addFlash('error','vous n\'avez pas le droit de modifier votre rdv default');
+             $this->addFlash('error','vous n\'avez pas le droit de modifier votre rdv ');
 
               return $this->redirectToRoute('app_rdv');
         }
