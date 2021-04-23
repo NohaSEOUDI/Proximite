@@ -201,7 +201,7 @@ class PinsController extends AbstractController
   * @param User $idClient
   * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
  */
-    public function showCalendar(Request $request,$idS,User $idClient): Response
+    public function showCalendar(Request $request,$idS,User $idClient=null): Response
     {   //fonction qui ajoute le service en bbd
 
            // $user_id= $request->query()->get('user_id');
