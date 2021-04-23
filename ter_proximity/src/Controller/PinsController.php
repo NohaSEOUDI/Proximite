@@ -195,13 +195,24 @@ class PinsController extends AbstractController
     }
     
 
-    /**
-     * @Route("/reservation/showCalendar/{idS}",name="app_show_calendar",methods={"Get","POST"})
-     */
-    public function showCalendar(Request $request,$idS): Response
-    {   
+ /**
+ * @Route("/reservation/showCalendar/{idS}/{idClient}",name="app_show_calendar",methods={"Get","POST"})
+  * @param Request $request
+  * @param User $idClient
+  * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+ */
+    public function showCalendar(Request $request,$idS,User $idClient): Response
+    {   //fonction qui ajoute le service en bbd
+
+           // $user_id= $request->query()->get('user_id');
+   
         
         $manager = $this->getDoctrine()->getManager();
+        
+
+       // dd($client);
+        //dd($idClient->getId());
+        $IdClientVal=$idClient->getId();
         $service = $this->getDoctrine()
         ->getRepository(Service::class)
         ->find($idS);
@@ -235,6 +246,7 @@ class PinsController extends AbstractController
         // dump($_POST["time"]);
        
         if($form->isSubmitted() && $form->isValid() ){
+            $reservation->setClient($idClient);
             $reservation->setDuree($service->getCreneauBase());
             $reservation->setService($service);
             $reservation->setFournisseur($fournisseur);

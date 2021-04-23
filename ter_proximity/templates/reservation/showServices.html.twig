@@ -15,7 +15,7 @@
 					<div class="col-md-8">
 						<div class="card-body">
 							<h5 class="card-title">{{ service.titre }}</h5>
-							<a href="{{path('app_show_calendar',{'idS': service.id})}}" class="card-link"> <span class="glyphicon glyphicon-calendar"></span>Prendre RDV</a>
+<a href="{{path('app_show_calendar',{ 'idS' : service.id, 'idClient' : app.user }  )}}" class="card-link"> <span class="glyphicon glyphicon-calendar"></span>Prendre RDV</a>
 						</div>
 					</div>
 			</div>
