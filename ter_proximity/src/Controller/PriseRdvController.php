@@ -162,7 +162,7 @@ class PriseRdvController extends AbstractController
               $this->addFlash('success','Vous pouvez modifier votre rdv sans frais');
               //return $this->render('pins/prise_rdv');
       //????return $this->redirectToRoute('app_show_calendar',array('idF'=>$val,'idS'=> $idclient));
-              //return $this->redirectToRoute('app_add_calendrier');
+              return $this->redirectToRoute('app_rdv');
               break;
 
             default :

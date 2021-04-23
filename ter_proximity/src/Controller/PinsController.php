@@ -216,11 +216,11 @@ class PinsController extends AbstractController
 
        // dd($client);
         //dd($idClient->getId());
-<<<<<<< HEAD
+
         //$IdClientVal=$idClient->getId();
-=======
+
        // $IdClientVal=$idClient->getId();
->>>>>>> 16a5ce6138650dc15015c925a23cb18b0fcf8cf0
+
         $service = $this->getDoctrine()
         ->getRepository(Service::class)
         ->find($idS);
