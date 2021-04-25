@@ -249,13 +249,13 @@ class PinsController extends AbstractController
         ->findBy(
             array('service'=>$service), 
         );
-        dump($rdvNondispo);
+        $nondispo=array();
         foreach($rdvNondispo as $rdv){
             $date="".$rdv->getJour()->format('d/m/Y');
             $nondispo[$date][]=$rdv->getHeure();
         }
         //$nondispo=implode(",", $array);
-        dump($nondispo);
+       
         // dump($_POST["time"]);
           if ($this->getUser()==null) {
             $this->addFlash('error','Vous devez vous connecter avant de prendre le RDV!');//a revoir 
