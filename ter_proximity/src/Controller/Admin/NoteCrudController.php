@@ -2,7 +2,14 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Fournisseur;
 use App\Entity\Service;
+use App\Entity\TypeService;
+use App\Entity\Notes;
+use App\Entity\Reservation;
+use App\Entity\Calendrier;
+use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -15,15 +22,15 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\LocaleField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use Vich\UploaderBundle\Form\Type\VichImageType;
-use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
 
-class ServiceCrudController extends AbstractCrudController
+class NoteCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Service::class;
+        return Notes::class;
     }
 
 
@@ -31,18 +38,19 @@ class ServiceCrudController extends AbstractCrudController
     {
         
         $fields = [
-            TextField::new('titre'),
-            TelephoneField::new('telephone'),
-            TextField::new('adresse'),
-            NumberField::new('creneau_base'),
-            NumberField::new('tarif'),
-            AssociationField::new('type')->autocomplete(),
+            AssociationField::new('client')->hideOnForm(),
             AssociationField::new('fournisseur')->hideOnForm(),
+            NumberField::new('niveau_satisfaction'),
+            NumberField::new('probleme_rdv'),
+            TextField::new('commentaire'),
+            // AssociationField::new('type')->autocomplete(),
+            // 
         ];
 
         
         return $fields;
     }
+    
     public function suppression(AdminContext $context)
     {  
         return $this->redirect($this->get(CrudUrlGenerator::class)->build()->setAction(Action::INDEX)->generateUrl());

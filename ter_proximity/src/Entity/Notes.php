@@ -3,6 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\NotesRepository;
+
+// use Doctrine\Common\Collections\ArrayCollection;
+// use Doctrine\Common\Collections\Collection;
+
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -140,6 +145,13 @@ class Notes
         $this->commentaire = $commentaire;
 
         return $this;
+    }
+
+
+    public function __toString()
+    {   
+
+        return (string)$this->getId();
     }
 
 }

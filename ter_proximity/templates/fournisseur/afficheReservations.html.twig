@@ -1,5 +1,15 @@
 {% extends 'bases2.html.twig' %}
 {% block body %}
+<h3> Nombre total de rdvs : <b>{{ total }}</b></h3>
+{{ form_start(periode) }}
+  <div class="form-row align-items-end">
+    <div class="col">
+     {{ form_widget(periode) }} 
+    </div>
+  </div>
+  {{ form_end(periode) }}
+  
+
 <table class="table table-hover">
   <thead>
     <tr>
@@ -7,19 +17,56 @@
       <th scope="col">Heure Debut</th>
       <th scope="col">Heure Fin</th>
       <th scope="col">Etat</th>
+       <th scope="col">RDV honoré ?</th>
       <th scope="col">Client</th>
     </tr>
   </thead>
   <tbody>
-    {% for reservation in reservations %}
-        <tr>
-            <td>{{ reservation.jour|date('Y-m-d') }}</td>
-            <td>{{ reservation.start }}</td>
-            <td>{{ reservation.end }}</td>
-            <td>{{ reservation.etat }}</td>
-            <td>{{ reservation.client }}</td>
-        </tr>
-    {% endfor %}
+      {% if rdvs |length > 0 %}   
+        <h4> Nombre de rdvs correspondant à votre recherche : <b>{{ nbrecherche }}</b></h4>
+          {% for rdv in rdvs %}
+              <tr>
+                  <td>{{ rdv.jour|date('Y-m-d') }}</td>
+                  <td>{{ rdv.start }}</td>
+                  <td>{{ rdv.end }}</td>
+                  <td>{{ rdv.etat }}</td>
+
+                  {% if rdv.etat |lower == 'passé' %}
+                      {% if rdv.honore == '' %}
+                        <td><form action="" methode="post" ><button type="button" class="btn btn-success" name="HONORE" value="true"><a href="{{ path('app_change_honore_oui', { 'idF': idF , 'idR':rdv.id }) }} style="color: white; text-decoration: none;">Oui</a></button><button type="button" class="btn btn-danger" name="HONORE" value="false"><a href="{{ path('app_change_honore_non', { 'idF': idF , 'idR':rdv.id }) }}" style="color: white; text-decoration: none;">Non</a></button></form></td>
+                      {% else %}
+                        <td>{{ rdv.honore }}</td>
+                      {% endif %}
+                  {% else %}
+                      <td><div class="alert alert-dismissible alert-secondary">
+                            A vérifier prochainement</div></td>
+                  {% endif %}
+                  <td>{{ rdv.client }}</td>
+              </tr>
+          {% endfor %}
+      {% else %}
+            {% for reservation in reservations %}
+              <tr>
+                  <td>{{ reservation.jour|date('Y-m-d') }}</td>
+                  <td>{{ reservation.start }}</td>
+                  <td>{{ reservation.end }}</td>
+                  <td>{{ reservation.etat }}</td>
+                  
+                    {% if reservation.etat |lower == 'passé' %}
+                      {% if reservation.honore == '' %}
+                        <td><form action="" methode="post" ><button type="button" class="btn btn-success" name="HONORE" value="true"><a href="{{ path('app_change_honore_oui', { 'idF': idF , 'idR':reservation.id }) }}" style="color: white; text-decoration: none;">Oui</a></button><button type="button" class="btn btn-danger" name="HONORE" value="false"><a href="{{ path('app_change_honore_non', { 'idF': idF , 'idR':reservation.id }) }}" style="color: white; text-decoration: none;">Non</a></button></form></td>
+                      {% else %}
+                        <td>{{ reservation.honore }}</td>
+                      {% endif %}
+                    {% else %}
+                        <td><div class="alert alert-dismissible alert-secondary">
+                             A vérifier prochainement</div></td>
+                    {% endif %}
+
+                  <td>{{ reservation.client }}</td>
+              </tr>
+          {% endfor %}
+        {% endif %}
     </tbody>
 </table>
 {% endblock %}

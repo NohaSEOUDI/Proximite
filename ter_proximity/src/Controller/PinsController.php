@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Repository\PinRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +22,8 @@ use App\Entity\Service;
 use App\Form\ServiceType;
 use App\Entity\Calendrier;
 use App\Form\CalendrierType;
+use App\Form\SearchByDayType;
+use App\Form\SearchByIntervallType;
 use App\Entity\Jour;
 use App\Form\JourType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -30,6 +33,8 @@ use Doctrine\Common\Collections\Collection;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Controller\Environment;
 use App\Repository\ReservationRepository;
@@ -244,13 +249,13 @@ class PinsController extends AbstractController
         ->findBy(
             array('service'=>$service), 
         );
-        dump($rdvNondispo);
+        $nondispo=array();
         foreach($rdvNondispo as $rdv){
             $date="".$rdv->getJour()->format('d/m/Y');
             $nondispo[$date][]=$rdv->getHeure();
         }
         //$nondispo=implode(",", $array);
-        dump($nondispo);
+       
         // dump($_POST["time"]);
           if ($this->getUser()==null) {
             $this->addFlash('error','Vous devez vous connecter avant de prendre le RDV!');//a revoir 
@@ -285,15 +290,16 @@ class PinsController extends AbstractController
     
     }
 
-     /**
-     * @Route("/indexFournisseur",name="app_index_fournisseur",methods={"Get","POST"})
-     */
-    public function indexFournisseur(Request $request): Response
-    {   
-        return $this->render('fournisseur/indexFournisseur.html.twig');
+    //  /**
+    //  * @Route("/indexFournisseur",name="app_index_fournisseur",methods={"Get","POST"})
+    //  */
+    // public function indexFournisseur(Request $request): Response
 
-    
-    }
+    // {	
+    //     return $this->render('fournisseur/indexFournisseur.html.twig');
+        
+ 
+    // }
 
      /**
      * @Route("/fullCalendar/{idFournisseur}",name="app_fullCalendar",methods={"Get","POST"})
@@ -313,7 +319,7 @@ class PinsController extends AbstractController
         ->findBy(
             array('fournisseur'=>$fournisseur), 
         );
-        dump($reservations);
+        //dump($reservations);
         $rdvs=[];
         foreach($reservations as $reservation){
             $heureDebut=$reservation->getHeure();
@@ -343,12 +349,43 @@ class PinsController extends AbstractController
         return $this->render('reservation/fullCalendar.html.twig',compact('data'));
     
     }
+     /**
+     * @Route("/changeOuiHonore/{idF}/{idR}",name="app_change_honore_oui",methods={"Get","POST"})
+     */
+    public function changeOuiHonore(Request $request,$idF,$idR): Response
+    {	
+        $manager = $this->getDoctrine()->getManager();
+        $reservation = $this->getDoctrine()
+        ->getRepository(Reservation::class)
+        ->find($idR);
+        $reservation->setEstHonore(1);
+        $manager->persist($reservation);
+        $manager->flush();
+        return $this->redirectToRoute('app_affiche_reservation', ['idF' => $idF]);
+    }
+
+    /**
+     * @Route("/changeNonHonore/{idF}/{idR}",name="app_change_honore_non",methods={"Get","POST"})
+     */
+    public function changeNonHonore(Request $request,$idF,$idR): Response
+    {	
+        $manager = $this->getDoctrine()->getManager();
+        $reservation = $this->getDoctrine()
+        ->getRepository(Reservation::class)
+        ->find($idR);
+        $reservation->setEstHonore(0);
+        $manager->persist($reservation);
+        $manager->flush();
+        return $this->redirectToRoute('app_affiche_reservation', ['idF' => $idF]);
+    }
 
      /**
      * @Route("/afficheReservations/{idF}",name="app_affiche_reservation",methods={"Get","POST"})
      */
     public function afficheReservation(Request $request,$idF): Response
+
     {   
+
         $fournisseur = $this->getDoctrine()
         ->getRepository(Fournisseur::class)
         ->find($idF);
@@ -368,7 +405,7 @@ class PinsController extends AbstractController
             $client=new User();
             $client =$reservation->getClient();
             $title="".$client->getUuid();
-            dump($title);
+            //dump($title);
             $start="".$reservation->getHeure();
             $time = strtotime($heureDebut);
             $endTime = date("H:i", strtotime('+'.$duree.'minutes', $time));
@@ -377,27 +414,79 @@ class PinsController extends AbstractController
             $jour=$reservation->getJour();
             $now = new \DateTime("now");
             $etat="";
-            if ($jour >= $now ) {
+            if ($jour < $now ) {
                $etat="Passé";
             } else{
                $etat="A venir";
             }
             
+         
+            $h=$reservation->getEstHonore();
+            $honore="";
+            if(isset($h)){
+                if($h==true){
+                    $honore="Oui";
+                }
+                else if($h==false){
+                    $honore="Non";
+                }
+            }
             $rdvs[]=[
+                'id'=>$reservation->getId(),
                 'jour'=>$reservation->getJour(),
                 'start'=> $start,
                 'end'=>$end,
                 'client'=>$title,
-                'etat'=>$etat,
-               
-                
+                'etat'=>$etat,  
+                'honore'=>$honore
             ];
-        
+            //dump($honore);
         }
+        
+        //formulaire de recherche 
+        $parPeriode = [];
+        $SearchPeriod = $this->createFormBuilder($parPeriode, array(
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+        ))
+            ->add('du',DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('au',DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('recherche_une_periode', SubmitType::class)
+            ->getForm();
+
+        $SearchPeriod->handleRequest($request);
+        $r=[];
+        if ($SearchPeriod->isSubmitted()) {
+            $data = $SearchPeriod->getData();
+            $r = $this->getDoctrine()
+            ->getRepository(Reservation::class)
+            ->findAllBetweenDates($data["du"],$data["au"]);
+        }
+        
+        dump($r);
+        $RDVS=[];
+        foreach($rdvs as $rdv){
+            foreach($r as $reservation){
+                if($reservation->getJour()==$rdv["jour"] && $reservation->getId()==$rdv["id"]){
+                    $RDVS[]=$rdv;
+                }
+            }
+        }
+        
+        $total=sizeof($rdvs);
+        $recherche=sizeof($RDVS);
         return $this->render('fournisseur/afficheReservations.html.twig',[
             'idF'=>$idF,
-            'reservations'=>$rdvs
-            
+            'reservations'=>$rdvs,
+            'periode'=>$SearchPeriod->createView(),
+            'rdvs'=>$RDVS,
+            'total'=>$total,
+            'nbrecherche'=>$recherche
+         
         ]);
 
     
