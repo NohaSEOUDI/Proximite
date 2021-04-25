@@ -51,9 +51,8 @@ class FournisseurCrudController extends AbstractCrudController
         $service= $this->getDoctrine()->getRepository(Service::class)->findBy(
             array('fournisseur'=>$fournisseur), 
         );
-        $type= $this->getDoctrine()->getRepository(TypeService::class)->findBy(
-            array('service'=>$service), 
-        );
+        dump($service);
+        
         $calendrier= $this->getDoctrine()->getRepository(Calendrier::class)->findBy(
             array('service'=>$service), 
         );
@@ -65,14 +64,10 @@ class FournisseurCrudController extends AbstractCrudController
         );
         dump($fournisseur);
         dump($service);
-        dump($type);
         dump($calendrier);
         dump($reservation);
         foreach ($reservation as $r) {
             $manager->remove($r);
-        }
-        foreach ($type as $t) {
-            $manager->remove($t);
         }
         foreach ($calendrier as $c) {
             $manager->remove($c);

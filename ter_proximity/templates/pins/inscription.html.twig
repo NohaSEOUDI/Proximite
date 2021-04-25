@@ -4,15 +4,71 @@
 		<title>Project</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="css/style.css" rel="stylesheet" />
+ 
+<style>
+    .bs-example{
+      margin: 20px;
+    }
+</style>
+<script>
+$(document).ready(function(){
+    $(".toast").toast();
+});
+</script>
+
+		<style type="text/css">
+		.item {
+		    	display: none;
+		   		position: relative;
+		   	   .transition(.6s ease-in-out left);
+		}
+
+		</style>
+  
+
 	{% endblock  %}
 {% block body %}
 
 
  {{ include('Layouts/partials/_nav.html.twig') }}
+ 
+
+<h1 align="center"><B>Bonjour {{ app.user.Uuid }}</B></h1>
 			
 
-	<h1>Bonjour {{ app.user.uuid }}</h1>
-			
+
+<!--div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+  
+  <div style="position: absolute; top: 0; right: 0;">
+
+    
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="mr-auto">Rappel !</strong>
+        <small class="text-muted">just now</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        Vous avez un RDV prochainement !!
+      </div>
+    </div>
+
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="mr-auto">Attention !</strong>
+        <small class="text-muted">2 seconds ago</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        Vous pouvez maintenant noter le fournisseur
+      </div>
+    </div>
+  </div>
+</div-->
 
 		
 {% endblock %}

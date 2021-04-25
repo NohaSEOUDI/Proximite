@@ -57,6 +57,7 @@ class NotesType extends AbstractType
                 'label' => 'Utiliserz-vous notre service à l\'avenir ?'
             ))
             ->add('commentaire',TextareaType::class,array(
+                'required' => false,
                 'label' => 'Auriez-vous des remarques ou suggestions d\'amélioration ? '
             ))
             

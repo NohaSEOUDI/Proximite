@@ -2,14 +2,19 @@
 
 
 {% block body %}
-    <h1>Veuillez choisir un créneau à réserver: </h1>
+
+ {{ include('Layouts/partials/_nav.html.twig') }}
+    <h1 align="center"><B>Veuillez choisir un créneau à réserver:</B> </h1>
     {# <form methode="" action="">  #}
+     <div  class="d-grid gap-10 col-5 mx-auto" >
     {{form_start(formRdv)}}
     {{form_row(formRdv.jour,{'attr':{'name': "date"}})}}
     {# {{form_row(formRdv.heure,{'attr':{'id':"time",'value':"10:00"}})}} #}
-     <input  id="time" type="text" name="time" value="10:00">
+    <label>Heure</label></br>
+     <input  id="time" type="text" name="time" value="10:00"></br> </br>
+      <div class="d-grid gap-2 col-10 mx-auto" data-aos="fade-up" data-aos-delay="0">
      <button type="submit" class="btn btn-primary">Prendre RDV</button>
-    
+    </div>
       
     
   <script type="text/javascript">
@@ -111,6 +116,7 @@
     }
   </script>
    {{form_end(formRdv)}}
+   <div>
  {# </form> #}
  
 {% endblock %}

@@ -38,17 +38,19 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Controller\Environment;
 use App\Repository\ReservationRepository;
+use App\Repository\NotesRepository;
+use App\Entity\Notes;
 
 
 class PinsController extends AbstractController
-{	private $em;
+{   private $em;
 
     /**
      * @Route("/",name="app_home",methods={"Get","POST"})
      *
      */
     public function index(ReservationRepository $priseRdv): Response
-    {	
+    {   
        $Reservations= $priseRdv->findAll();
         return $this->render('pins/index.html.twig',compact('Reservations'));
       
@@ -59,7 +61,7 @@ class PinsController extends AbstractController
      */
     public function create(Request $request,EntityManagerInterface $em): Response{
         
-    	return $this->render('pins/create.html.twig');
+        return $this->render('pins/create.html.twig');
     }
 
     /**
@@ -74,14 +76,20 @@ class PinsController extends AbstractController
      * @Route("/pins/addfournisseur",name="app_add_fournisseur",methods={"Get","POST"})
      */
     public function addfournisseur(Request $request): Response
-    {	
+    {   
         $manager = $this->getDoctrine()->getManager();
         $fournisseur= new Fournisseur();
 
         $form = $this->createForm(FournisseurType::class, $fournisseur);
         $form->handleRequest($request);
+         if ($this->getUser()) {
+            $this->addFlash('error','Vous n\'avez pas le droit d\'accéder !');//car connecté en étant client
+             return $this->redirectToRoute('app_rdv');
+         }
         if($form->isSubmitted() && $form->isValid() ){
-            dump($request);
+           // dump($request);
+
+            
             $manager->persist($fournisseur);
             $manager->flush();
             return $this->redirectToRoute('app_add_type',['idFournisseur'  => $fournisseur->getId()]);
@@ -96,7 +104,7 @@ class PinsController extends AbstractController
      * @Route("/pins/addType/{idFournisseur}",name="app_add_type",methods={"Get","POST"})
      */
     public function addtype(Request $request, $idFournisseur): Response
-    {	
+    {   
         $manager = $this->getDoctrine()->getManager();
         $type= new TypeService();
         
@@ -118,7 +126,7 @@ class PinsController extends AbstractController
      * @Route("/pins/addService/{idFournisseur}/{idType}",name="app_add_service",methods={"Get","POST"})
      */
     public function addservice(Request $request,$idFournisseur,$idType): Response
-    {	
+    {   
         $manager = $this->getDoctrine()->getManager();
         $service= new Service();
         
@@ -170,7 +178,7 @@ class PinsController extends AbstractController
         
         return $this->render('pins/addCalendrier.html.twig',[
             'formCalendrier' => $form->createView() 
-        ]);	
+        ]); 
         
     }
 
@@ -178,7 +186,7 @@ class PinsController extends AbstractController
      * @Route("/reservation/showServices",name="app_show_services",methods={"Get","POST"})
      */
     public function showServices(Request $request): Response
-    {	
+    {   
         
         $services = $this->getDoctrine()
         ->getRepository(Service::class)
@@ -196,13 +204,28 @@ class PinsController extends AbstractController
     }
     
 
-    /**
-     * @Route("/reservation/showCalendar/{idS}",name="app_show_calendar",methods={"Get","POST"})
-     */
-    public function showCalendar(Request $request,$idS): Response
-    {	
+ /**
+ * @Route("/reservation/showCalendar/{idS}/{idClient}",name="app_show_calendar",methods={"Get","POST"})
+  * @param Request $request
+  * @param User $idClient
+  * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+ */
+    public function showCalendar(Request $request,$idS,User $idClient=null): Response
+    {   //fonction qui ajoute le service en bbd
+
+           // $user_id= $request->query()->get('user_id');
+   
         
         $manager = $this->getDoctrine()->getManager();
+        
+
+       // dd($client);
+        //dd($idClient->getId());
+
+        //$IdClientVal=$idClient->getId();
+
+       // $IdClientVal=$idClient->getId();
+
         $service = $this->getDoctrine()
         ->getRepository(Service::class)
         ->find($idS);
@@ -234,8 +257,15 @@ class PinsController extends AbstractController
         //$nondispo=implode(",", $array);
         dump($nondispo);
         // dump($_POST["time"]);
-       
+          if ($this->getUser()==null) {
+            $this->addFlash('error','Vous devez vous connecter avant de prendre le RDV!');//a revoir 
+             return $this->redirectToRoute('app_login');
+         }
+         else{
+
+
         if($form->isSubmitted() && $form->isValid() ){
+            $reservation->setClient($idClient);
             $reservation->setDuree($service->getCreneauBase());
             $reservation->setService($service);
             $reservation->setFournisseur($fournisseur);
@@ -244,9 +274,11 @@ class PinsController extends AbstractController
             dump($reservation);
             $manager->persist($reservation);
             $manager->flush();
+         $this->addFlash('success',"Merci, votre RDV a bien été enregistré !");
             return $this->redirectToRoute('app_show_services');
         }
 
+    }
         return $this->render('reservation/showCalendar.html.twig',[
             'calendrier' => $calendrier,
             'formRdv' => $form->createView(),
@@ -258,22 +290,22 @@ class PinsController extends AbstractController
     
     }
 
-     /**
-     * @Route("/indexFournisseur",name="app_index_fournisseur",methods={"Get","POST"})
-     */
-    public function indexFournisseur(Request $request): Response
-    {	
-        // return $this->render('fournisseur/indexFournisseur.html.twig');
-        return $this->render('security/loginFournisseur.html.twig');
+    //  /**
+    //  * @Route("/indexFournisseur",name="app_index_fournisseur",methods={"Get","POST"})
+    //  */
+    // public function indexFournisseur(Request $request): Response
 
-    
-    }
+    // {	
+    //     return $this->render('fournisseur/indexFournisseur.html.twig');
+        
+ 
+    // }
 
      /**
      * @Route("/fullCalendar/{idFournisseur}",name="app_fullCalendar",methods={"Get","POST"})
      */
     public function fullCalendar(Request $request,$idFournisseur): Response
-    {	
+    {   
         $manager = $this->getDoctrine()->getManager();
 
         $fournisseur = $this->getDoctrine()
@@ -351,8 +383,8 @@ class PinsController extends AbstractController
      * @Route("/afficheReservations/{idF}",name="app_affiche_reservation",methods={"Get","POST"})
      */
     public function afficheReservation(Request $request,$idF): Response
-    {	
-        
+
+    {   
 
         $fournisseur = $this->getDoctrine()
         ->getRepository(Fournisseur::class)
@@ -444,7 +476,7 @@ class PinsController extends AbstractController
                 }
             }
         }
-        dump($RDVS);
+        
         $total=sizeof($rdvs);
         $recherche=sizeof($RDVS);
         return $this->render('fournisseur/afficheReservations.html.twig',[

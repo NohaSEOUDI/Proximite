@@ -52,6 +52,7 @@ class FournisseurRepository extends ServiceEntityRepository implements PasswordU
         ;
     }
     */
+  
 
     /*
     public function findOneBySomeField($value): ?Fournisseur

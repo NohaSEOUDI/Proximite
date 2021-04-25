@@ -5,10 +5,12 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 use App\Entity\Reservation;
 use App\Entity\Fournisseur;
 use App\Entity\User;
 use App\Entity\Notes;
+use App\Repository\NotesRepository;
 use App\Form\NotesType;
 use App\Repository\ReservationRepository;
 use App\Repository\UserRepository;
@@ -79,31 +81,49 @@ class PriseRdvController extends AbstractController
 
     }
 
+
     /**
-     * @Route("/prise/rdv/{id}/noter", name="app_rdv_noter",methods="GET|POST")
+     * @Route("/prise/rdv/{id}/noter",name="app_rdv_noter",methods="GET|POST")
+     *
      */
-    public function add(ReservationRepository $priseRdv,Request $request,Reservation $r): Response
-    { 
+    public function add(NotesRepository $NotesRep,ReservationRepository $priseRdv,Request $request,Reservation $r): Response
+    { //id dans le route celle du reservation
+      if($r->getEstHonore()==0){
+        $this->addFlash('error','Vous n\'avez pas le droit de noter');
+        return $this->redirectToRoute('app_rdv');
+      }
+      
 
       $notes=new Notes();
+      $f=new fournisseur();
       $form=$this->createForm(NotesType::class, $notes);
       $form->handleRequest($request);
       
        if ($form->isSubmitted() && $form->isValid()) {
         $entityManager = $this->getDoctrine()->getManager();
         //dd($r);
-       $notes->setClient($r->getClient());
+        $notes->setClient($r->getClient());
         $notes->setFournisseur($r->getFournisseur());
+
+        //le score moyenne du fournisseur en question 
+         $moyenne=$NotesRep->avgScore($notes->getFournisseur());
+         $value=$moyenne["scoreMoyenne"];
+         //dd($value);
+         $r->getFournisseur()->setNoteMoyenne($value);
+         //---------------
         $entityManager->persist($notes);
         $entityManager->flush();
+         //dd($r->getFournisseur()->getNoteMoyenne());
         $this->addFlash('success','Merci d\'avoir donnez votre avis');
-        //return $this->redirectToRoute('app_rdv');
+       return  $this->redirectToRoute('app_rdv');
+       // dd($value);
+
       }
+      
      // dd($notes);
       return $this->render('pins/prise_rdv/noterF.html.twig',['form'=>
       $form->createView()]);
-    }
-   
+    }    
 
     /**
     *@Route("/prise/rdv/{id}/edit",name="app_rdv_edit",methods="GET|POST",
@@ -113,7 +133,9 @@ class PriseRdvController extends AbstractController
     public function edit($id,ReservationRepository $priseRdv,Request $request,Reservation $r,EntityManagerInterface $em): Response
    {    
     //dd($id);
+
     $val=$r->getFournisseur()->getId();
+    $idclient=$r->getClient()->getId();
     //dd($val);
     $var=$priseRdv->findOneBySomeField($val);//fonction qui retourne un Array 
     //dd($var);
@@ -139,12 +161,12 @@ class PriseRdvController extends AbstractController
             case 'Possibilité de modification sans frais':
               $this->addFlash('success','Vous pouvez modifier votre rdv sans frais');
               //return $this->render('pins/prise_rdv');
+      //????return $this->redirectToRoute('app_show_calendar',array('idF'=>$val,'idS'=> $idclient));
               return $this->redirectToRoute('app_rdv');
-              //return $this->redirectToRoute('app_add_calendrier');
               break;
 
             default :
-             $this->addFlash('error','vous n\'avez pas le droit de modifier votre rdv default');
+             $this->addFlash('error','vous n\'avez pas le droit de modifier votre rdv ');
 
               return $this->redirectToRoute('app_rdv');
         }

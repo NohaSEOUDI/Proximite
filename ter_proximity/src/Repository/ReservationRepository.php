@@ -48,7 +48,6 @@ $query =  $this->createQueryBuilder('a')
       ])
 
     */
-
     
    //fonction qui me récupere la politique du F 
     public function findOneBySomeField($value): ?Array
