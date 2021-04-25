@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 class ReservationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -21,6 +21,12 @@ class ReservationType extends AbstractType
             'attr' => ['class' => 'js-datepicker'],
             'input'  => 'datetime_immutable'])
         //    ->add('heure', TextType::class)
+        // ->add('oui',ButtonType::class, [
+        //     'attr' => ['value' => 'true'],
+        // ])
+        // ->add('non',ButtonType::class, [
+        //     'attr' => ['value' => 'false'],
+        // ])
         ;
     }
 

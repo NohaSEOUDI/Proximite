@@ -6,7 +6,8 @@ use App\Entity\Fournisseur;
 use App\Entity\Reservation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\Product;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 /**
  * @method Reservation|null find($id, $lockMode = null, $lockVersion = null)
  * @method Reservation|null findOneBy(array $criteria, array $orderBy = null)
@@ -77,4 +78,21 @@ $query =  $this->createQueryBuilder('a')
             ->getOneOrNullResult()
         ;
     }*/
+
+    public function findAllBetweenDates($d1,$d2): array
+    {
+        // automatically knows to select Products
+        // the "p" is an alias you'll use in the rest of the query
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.jour BETWEEN :d1 AND :d2')
+            ->setParameter('d1', $d1)
+            ->setParameter('d2', $d2)
+            ->orderBy('p.jour', 'ASC');
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+
+    }
+
 }
