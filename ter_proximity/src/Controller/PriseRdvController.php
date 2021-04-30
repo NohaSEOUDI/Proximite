@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use App\Entity\Reservation;
 use App\Entity\Fournisseur;
 use App\Entity\User;
@@ -14,7 +17,7 @@ use App\Repository\NotesRepository;
 use App\Form\NotesType;
 use App\Repository\ReservationRepository;
 use App\Repository\UserRepository;
-
+use App\Entity\Service;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,6 +29,15 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+
+
+use App\Entity\VillesFranceFree;
+use Symfony\Component\Form\AbstractType;
+
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class PriseRdvController extends AbstractController
 {
@@ -44,7 +56,46 @@ class PriseRdvController extends AbstractController
         return $this->render('pins/prise_rdv/indexRdv.html.twig',compact('Reservations'));
     }
 
-    
+    /**
+     * @Route("/recherche", name="app_searche",methods={"Get","POST"})
+     */
+    public function indexAction(Request $request):  Response
+    {//fonction de reserche de ville
+        $manager = $this->getDoctrine()->getManager();
+        $ville= new VillesFranceFree();
+
+         $form = $this->createForm(VilleType::class, $ville);
+         $form->handleRequest($request);
+
+        $kw = $request->query->get('kw');
+        $city=$request->query->get('city');
+       
+if($form->isSubmitted() && $form->isValid() ){
+        if (!empty($kw)) {
+            $query = $this->getDoctrine()
+                ->getManager()
+                ->createQuery("select u from App:User u
+                 where u.post = :kw and u.city= :city
+                ")
+                ->setParameter('kw', "$kw")
+                ->setParameter('city', "$city");
+            $users = $query->getResult();
+        } else {
+            $query = $this->getDoctrine()
+                ->getManager()
+                ->getRepository(User::class);
+            $users = $query->findAll();
+        }
+ }
+        return $this->render('default/index.html.twig',[
+            'form' => $form->createView() 
+        ]);
+
+        //return $this->render('default/index.html.twig', compact('users'));
+    }
+
+
+
 
    /**
     *@Route("/prise/rdv/{id}",name="app_rdv_delete",methods="GET|Delete",
@@ -53,11 +104,22 @@ class PriseRdvController extends AbstractController
    */
     public function delete($id,ReservationRepository $priseRdv,Request $request,Reservation $r,EntityManagerInterface $em): Response
     {
-      //dd($id);
-    $var=$priseRdv->findOneBySomeField($id);//fonction qui retourne un Array 
-   // dd($var);
+   
+       /*si on veux l'enterdit d'annuler un rdv déjà passé
+       if($r->getEstHonore()==1){
+         $this->addFlash('error', 'Votre rdv est passée !');
+         $this->redirectToRoute('app_rdv');
+         return $this->render('pins/prise_rdv/indexRdv.html.twig', [
+                'Reservations'=>$r,
+              ]);
+
+       }
+       else{*/
+    $val=$r->getFournisseur()->getId();
+   
+    $var=$priseRdv->findOneBySomeField($val);//fonction qui retourne un Array 
+
     $value=$var["politique"];//je récupere la valeur
-    //dd($value);
 
      
       $article=$em->getRepository(Reservation::class);
@@ -65,6 +127,8 @@ class PriseRdvController extends AbstractController
         throw new Exception("Error Processing Request :".$r);
         
       }
+    
+      
       switch($value){
          case 'Pas de possibilité dannulation une fois le client a réservé':
              $this->addFlash('error','Vous n\'avez pas le droit d\'annuler le rdv');
@@ -76,6 +140,10 @@ class PriseRdvController extends AbstractController
          $this->addFlash('success', 'Votre rdv a bien été annulé !');
 
       }
+   
+
+       //}
+    
     
       return $this->redirectToRoute('app_rdv'); 
 
@@ -135,12 +203,23 @@ class PriseRdvController extends AbstractController
     //dd($id);
 
     $val=$r->getFournisseur()->getId();
+    $service=$r->getService()->getId();
+     //  dd($service);
     $idclient=$r->getClient()->getId();
-    //dd($val);
+    //dd($idclient);
     $var=$priseRdv->findOneBySomeField($val);//fonction qui retourne un Array 
     //dd($var);
     $value=$var["politique"];//je récupere la valeur de la politique 
     //dd($value);
+  if($r->getEstHonore()==1){
+        $this->addFlash('error', 'Votre rdv est passée !');
+         $this->redirectToRoute('app_rdv');
+         return $this->render('pins/prise_rdv/indexRdv.html.twig', [
+                'Reservations'=>$r,
+              ]);
+
+       }
+  else{
 
        switch($value){
             case 'Nécessite de payement dun acompte pour toute réservation':
@@ -160,9 +239,10 @@ class PriseRdvController extends AbstractController
               break;
             case 'Possibilité de modification sans frais':
               $this->addFlash('success','Vous pouvez modifier votre rdv sans frais');
-              //return $this->render('pins/prise_rdv');
-      //????return $this->redirectToRoute('app_show_calendar',array('idF'=>$val,'idS'=> $idclient));
-              return $this->redirectToRoute('app_rdv');
+             
+       return  $this->redirectToRoute('app_show_calendar',array('idS'=>$service,'idClient'=> $idclient, 'idRe'=>$id));
+           $this->addFlash('success','Votre rdv est bien été changer');
+           $this->redirectToRoute('app_rdv');
               break;
 
             default :
@@ -170,8 +250,10 @@ class PriseRdvController extends AbstractController
 
               return $this->redirectToRoute('app_rdv');
         }
-      //}
-       /* return $this->render('pins/prise_rdv/edit.html.twig',
+
+       
+      }
+       /*return $this->render('pins/prise_rdv/index.html.twig',
           ['Reservations'=>$r]
         );*/
         

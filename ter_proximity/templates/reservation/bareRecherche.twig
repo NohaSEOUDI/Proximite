@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+ {{ include('Layouts/partials/_nav.html.twig') }}
+
+ <h1 align="center"><B>Annonces</B> </h1></br>
+<div  class="d-grid gap-10 col-5 mx-auto" >
+ <h1 align="center"><B>Annonces</B> </h1></br>
+  <div class="row mt-3 d-flex justify-content-center">
+        <form action="{{ path('homepage') }}" method="get">
+            <div class="row">
+                <div class="col">
+                    <input required type="text" name="city" class="form-control" id="city" placeholder="Ville">
+                </div>
+                <div class="col">
+                    <input required type="text" name="kw" class="form-control" id="kw" placeholder="chercher">
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col">
+                    <label for="inputEmail4">Début</label>
+                    <input required type="date" name="date1" class="form-control" id="d1" placeholder="Début">
+                </div>
+                <div class="col">
+                    <label for="inputEmail4">Finir</label>
+                    <input required type="date" name="date2" class="form-control" id="d2" placeholder="Finir">
+                </div>
+            </div>
+               <button type="submit" class="btn btn-primary mb-2">Rechercher</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+
+

@@ -54,7 +54,7 @@ class Fournisseur
      * @ORM\Column(type="float", nullable=true)
      */
     private $noteMoyenne;
-
+    
 
     public function __toString()
     {

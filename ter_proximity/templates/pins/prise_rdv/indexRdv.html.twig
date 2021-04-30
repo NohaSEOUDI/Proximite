@@ -20,6 +20,7 @@
 
 {% for r in Reservations %}
   {% if r.client==app.user %}
+
 <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
   <div class="card-header">Rdv numero   {{ loop.index }} </div>
   <div class="card-body">
@@ -29,16 +30,18 @@
       Heure: {{ r.heure|date("g:ia")}}</br>
       Type de survice : {{ r.service.titre }}</br>
  Fournisseur:{{ r.fournisseur.nom }} {{ r.fournisseur.prenom }}</br>
-      Frais: {{ r.frais }}</br>
-      Etat: {{ r.estHonore }}</br>
+      Frais: {{ r.frais }}  €</br>
+    
 
-  <a href="{{ path('app_rdv_edit', {id: r.id }) }}"class="btn btn-primary">Modifier</a>
+   <a href="{{ path('app_rdv_edit', {id: r.id }) }}" onclick="return confirm('Est-ce que vous êtes sûr de modifier le RDV ?');" class="btn btn-primary">Modifier</a>
   
     {% if r.estHonore==1 %}
-      <a href="{{ path('app_rdv_noter', {id: r.id }) }}"class="btn btn-primary">  Noter</a>
+      <a href="{{ path('app_rdv_noter', {id: r.id }) }}"class="btn btn-primary"> Noter </a>
     {% endif %}
   
-   <a href="{{ path('app_rdv_delete', {id: r.id  }) }}" class="btn btn-primary">Annuler</a>
+   <a href="{{ path('app_rdv_delete', {id: r.id  }) }}" onclick="return confirm('Est-ce que vous êtes sûr de supprimer le RDV ?');"class="btn btn-primary">Annuler</a>
+
+   
 
   </form> 
 
@@ -46,6 +49,7 @@
   </div>
 </div>
 </br>
+
  {% endif %}
 {% endfor %}
 </div>

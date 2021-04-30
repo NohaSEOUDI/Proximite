@@ -48,9 +48,11 @@ class Service
      * @ORM\Column(type="float")
      */
     private $tarif;
-
     
-
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $city;
     /**
      * @ORM\ManyToOne(targetEntity=TypeService::class)
      * @ORM\JoinColumn(nullable=false)
@@ -62,7 +64,22 @@ class Service
      */
     private $fournisseur;
 
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
 
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

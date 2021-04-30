@@ -8,7 +8,7 @@
     {# <form methode="" action="">  #}
      <div  class="d-grid gap-10 col-5 mx-auto" >
     {{form_start(formRdv)}}
-    {{form_row(formRdv.jour,{'attr':{'name': "date"}})}}
+    {{form_row(formRdv.jour,{'attr':{'name': "date",'id':"date"}})}}
     {# {{form_row(formRdv.heure,{'attr':{'id':"time",'value':"10:00"}})}} #}
     <label>Heure</label></br>
      <input  id="time" type="text" name="time" value="10:00"></br> </br>

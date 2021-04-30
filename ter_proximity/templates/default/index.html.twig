@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="form-group col-lg-6">
+ 
+
+
+    
+
+    <div class="row mt-3 d-flex justify-content-center">
+        <form action="{{ path('homepage') }}" method="get">
+               {{ form_start(form) }}
+     {{ form_row(form.villeNom,{'attr':{'placeholder': "Type"}}) }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Enregistrer et passer à la suite</button>
+    {{ form_end(form) }}
+
+
+            <div class="row">
+                <div class="col">
+                    <input required type="text" name="city" class="form-control" id="city" placeholder="Ville">
+                </div>
+                <div class="col">
+                    <input required type="text" name="kw" class="form-control" id="kw" placeholder="chercher">
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col">
+                    <label for="inputEmail4">Début</label>
+                    <input required type="date" name="date1" class="form-control" id="d1" placeholder="Début">
+                </div>
+                <div class="col">
+                    <label for="inputEmail4">Finir</label>
+                    <input required type="date" name="date2" class="form-control" id="d2" placeholder="Finir">
+                </div>
+            </div>
+{#            <div class="form-group mb-2">#}
+{#                <label class="text-warning font-weight-bold sr-only" for="kw">Password</label>#}
+{#                <input required type="text" name="city" class="form-control" id="city" placeholder="Ville">#}
+{#                <div class="input-group-prepend">#}
+{#                    <span class="glyphicon glyphicon-search"></span>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="form-group mb-2">#}
+{#                <label class="text-warning font-weight-bold sr-only" for="kw">Password</label>#}
+{#                <input required type="text" name="kw" class="form-control" id="kw" placeholder="chercher">#}
+{#                <div class="input-group-prepend">#}
+{#                    <span class="glyphicon glyphicon-search"></span>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="form-group mb-2">#}
+{#                <label class="text-warning font-weight-bold sr-only" for="kw">Password</label>#}
+{#                <input required type="date" name="date" class="form-control" id="city" placeholder="date">#}
+{#                <div class="input-group-prepend">#}
+{#                    <span class="glyphicon glyphicon-search"></span>#}
+{#                </div>#}
+{#            </div>#}
+            <button type="submit" class="btn btn-primary mb-2">Rechercher</button>
+        </form>
+    </div>
+
+    {% for user in users %}
+        <div class="row mt-3">
+            <div class="card mb-3 col-12">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img style="width: 70%" class="figure-img img-fluid rounded" src="{{ asset('image/avatar.jpg') }}" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body ">
+                            <h5 class="card-title">{{ user.uuid }}</h5>
+                            <p class="card-text">{{ user.email }}</p>
+                            <p class="card-text">{{ user.password }}</p>
+                            <p class="card-text"><small class="text-muted">Lundi -Samedi</small></p>
+                            
+                            <p class="card-text"><small class="text-muted">Fermé le dimanche</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+
+{% endblock %}

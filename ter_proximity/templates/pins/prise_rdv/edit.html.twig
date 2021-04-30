@@ -16,7 +16,12 @@
    	<h1>Edit Rdv #{{ Reservations.id }}</h1>
    	<label>Veuillez payer {{ Reservations.frais }} € frais de modifications</label></br>
    	<input type="number" name="frais" value="Frais"></br></br>
-		<button  type="submit"  class="btn btn-primary col-lg-5">Valider</button>
+		
+
+      <button type="button" class="btn btn-warning col-lg-5"><a href="{{ path('app_rdv') }}" class="card-link"> 
+      <span class="glyphicon glyphicon-calendar"></span><B>Valider</B></a></br></button>
+
+
    </form>
     
 
