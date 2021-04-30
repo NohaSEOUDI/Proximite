@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Entity\Pin;
 use App\Entity\User;
@@ -16,6 +17,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Fournisseur;
 use App\Form\FournisseurType;
+use App\Form\ProfileFournisseurType;
+use App\Form\ConnexionFournisseurType;
 use App\Entity\TypeService;
 use App\Form\GenreType;
 use App\Entity\Service;
@@ -44,7 +47,113 @@ use App\Entity\Notes;
 
 class PinsController extends AbstractController
 {   private $em;
+    
 
+    /**
+     * @Route("/indexFournisseur",name="app_index_fournisseur",methods={"Get","POST"})
+     */
+    public function indexFournisseur(Request $request): Response
+
+    {	
+        
+        $fournisseur= new Fournisseur();
+        
+        $form = $this->createForm(ConnexionFournisseurType::class, $fournisseur);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid() ){
+            $connexion=$request->get("connexion_fournisseur");
+            
+            $fs= $this->getDoctrine()
+            ->getRepository(Fournisseur::class)
+            ->findBy(
+                array('email'=>$connexion["email"]));
+            
+            foreach($fs as $i){
+                $f=$i;
+            }
+            if($f->getPassword()==$connexion["password"]){
+                
+                return $this->redirectToRoute('app_fullCalendar',['idFournisseur'=>$f->getId()]);
+            }
+            else{
+                $this->addFlash('error', 'mot de passe erroné');
+                return $this->render('fournisseur/indexFournisseur.html.twig',['form'=>$form->createView()]);
+            }
+        //     $manager->persist($type);
+        //     $manager->flush();
+        //    
+        }
+        
+        return $this->render('fournisseur/indexFournisseur.html.twig',['form'=>$form->createView()]);
+        
+ 
+    }
+
+    /**
+     * @Route("/profile/{idF}",name="app_profile",methods={"Get","POST"})
+     */
+    public function profile(Request $request, $idF): Response
+
+    {	
+        
+        $fournisseur = $this->getDoctrine()
+            ->getRepository(Fournisseur::class)
+            ->find($idF);
+        $services = $this->getDoctrine()
+            ->getRepository(Service::class)
+            ->findBy(
+                array('fournisseur'=>$fournisseur));
+        foreach($services as $s){
+            $service=$s;
+        }
+        return $this->render('fournisseur/profile.html.twig',[
+            'fournisseur' => $fournisseur,
+            'service'=>$service,
+            'idF'=>$fournisseur->getId()
+        ]);
+    }
+
+     /**
+     * @Route("/modifieProfile/{idF}",name="app_modifier_profile",methods={"Get","POST"})
+     */
+    public function modifieProfile(Request $request, $idF): Response
+    {	
+        $manager = $this->getDoctrine()->getManager();
+        $fournisseur = $this->getDoctrine()
+            ->getRepository(Fournisseur::class)
+            ->find($idF);
+        $services = $this->getDoctrine()
+            ->getRepository(Service::class)
+            ->findBy(
+                array('fournisseur'=>$fournisseur));
+        foreach($services as $s){
+            $service=$s;
+        }
+        $formFournisseur = $this->createForm(ProfileFournisseurType::class, $fournisseur);
+        $formFournisseur->handleRequest($request);
+        $formService = $this->createForm(ServiceType::class, $service);
+        $formService->handleRequest($request);
+
+        if($formFournisseur->isSubmitted() && $formFournisseur->isValid()){
+            $manager->persist($fournisseur);
+            $manager->flush();
+            return $this->redirectToRoute('app_profile',['idF'  => $fournisseur->getId()]);
+        }
+     
+        if($formService->isSubmitted()){
+            $manager->persist($service);
+            $manager->flush();
+            return $this->redirectToRoute('app_profile',['idF'  => $fournisseur->getId()]);
+        }
+  
+        return $this->render('fournisseur/modifierProfile.html.twig',[
+            'fournisseur' => $formFournisseur->createView(),
+            'service' => $formService->createView(),
+            'idF'=>$fournisseur->getId()
+        ]);
+
+    }
     /**
      * @Route("/",name="app_home",methods={"Get","POST"})
      *
@@ -290,16 +399,7 @@ class PinsController extends AbstractController
     
     }
 
-    //  /**
-    //  * @Route("/indexFournisseur",name="app_index_fournisseur",methods={"Get","POST"})
-    //  */
-    // public function indexFournisseur(Request $request): Response
-
-    // {	
-    //     return $this->render('fournisseur/indexFournisseur.html.twig');
-        
- 
-    // }
+     
 
      /**
      * @Route("/fullCalendar/{idFournisseur}",name="app_fullCalendar",methods={"Get","POST"})
@@ -346,7 +446,7 @@ class PinsController extends AbstractController
             ];
         }
         $data=json_encode($rdvs);
-        return $this->render('reservation/fullCalendar.html.twig',compact('data'));
+        return $this->render('reservation/fullCalendar.html.twig',['idF'=>$idFournisseur,'data'=>$data]);
     
     }
      /**

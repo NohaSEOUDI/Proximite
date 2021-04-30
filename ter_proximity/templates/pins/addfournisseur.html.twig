@@ -1,32 +1,41 @@
 {% extends 'bases2.html.twig' %}
 
 {% block body %}
-  <h2>Inscrivez-vous pour publier votre annonce.</h2>
-</br>
-   <div class="form-group col-lg-6">
-    {{ form_start(formFournisseur) }}{# balise ouvrante du form avec la methode et l'action #}
-     {{ form_row(formFournisseur.nom,{'attr':{'placeholder': "votre nom"}}) }}
-     {{ form_row(formFournisseur.prenom,{'attr':{'placeholder': "votre prenom"}}) }}
-    {{ form_row(formFournisseur.email,{'attr':{'placeholder': "votre email"}}) }}
-    {{ form_row(formFournisseur.password,{'attr':{'placeholder': "votre mot de passe"}}) }}
-     
-    {{ form_row(formFournisseur.politique,{'attr':{'placeholder': "votre politique"}}) }}
-    <SPAN style="position: absolute; top: 82%; left: 60%;">
-    {{ form_row(formFournisseur.frais,{'attr':{'style' : 'width:90px','rows' : '2','cols' : '15'}}) }}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#"> <big>Proximity</big> <small>Pro</small> </a>
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+      </div>
+  </nav>
+  <div classe="container">
+      <h2>Inscrivez-vous pour publier votre annonce.</h2>
+          </br>
+    
+      <div class="form-group col-lg-6">
+        {{ form_start(formFournisseur) }}{# balise ouvrante du form avec la methode et l'action #}
+        {{ form_row(formFournisseur.nom,{'attr':{'placeholder': "votre nom"}}) }}
+        {{ form_row(formFournisseur.prenom,{'attr':{'placeholder': "votre prenom"}}) }}
+        {{ form_row(formFournisseur.email,{'attr':{'placeholder': "votre email"}}) }}
+        {{ form_row(formFournisseur.password,{'attr':{'placeholder': "votre mot de passe"}}) }}
+        
+        {{ form_row(formFournisseur.politique,{'attr':{'placeholder': "votre politique"}}) }}
+        <SPAN style="position: absolute; top: 82%; left: 60%;">
+        {{ form_row(formFournisseur.frais,{'attr':{'style' : 'width:90px','rows' : '2','cols' : '15'}}) }}
+        </SPAN>
+      </div>
+      
+        
+        <!--div class="form-group col-lg-6">
+          <label for="">Confirmation du mot de passe</label>
+          <input type="password" class="form-control" id="" placeholder="confirmation du mot de passe">
+        </div-->
+        
+        <button type="submit" id="suite" class="btn btn-primary">Enregistrer et passer à la suite</button>
+        {{ form_end(formFournisseur) }}
+        
+    <SPAN style="position: absolute; top: 150px; left: 55%;">
+    <img src="../uploads/e0ce35c7af4fc7e17fcb3e2b33abc54e.jpg" width="550" height="680" alt="" class="w-full" data-aos="fade-up" data-aos-delay="0">
     </SPAN>
-  </div>
-   
-    
-    <!--div class="form-group col-lg-6">
-      <label for="">Confirmation du mot de passe</label>
-      <input type="password" class="form-control" id="" placeholder="confirmation du mot de passe">
-    </div-->
-    
-    <button type="submit" id="suite" class="btn btn-primary">Enregistrer et passer à la suite</button>
-    {{ form_end(formFournisseur) }}
-    
- <SPAN style="position: absolute; top: 150px; left: 55%;">
- <img src="../uploads/e0ce35c7af4fc7e17fcb3e2b33abc54e.jpg" width="550" height="680" alt="" class="w-full" data-aos="fade-up" data-aos-delay="0">
-</SPAN>
-    {#{{form(formFournisseur)}} pour afficher le formulaire en entier #}
+        {#{{form(formFournisseur)}} pour afficher le formulaire en entier #}
+</div>
 {% endblock %}

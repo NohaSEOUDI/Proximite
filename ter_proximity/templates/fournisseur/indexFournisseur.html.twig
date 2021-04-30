@@ -1,7 +1,59 @@
 {% extends 'bases2.html.twig' %}
 
 {% block body %}
-    <div classe="logo">
-        <img src="http://localhost/dossier-noha/ter-l3-proximite/ter_proximity/public/uploads/welcome.png">
 
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#"> <big>Proximity</big> <small>Pro</small> </a>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path("app_index_fournisseur") }}">Acceuil
+                <span class="sr-only">(current)</span>
+                </a>
+            </li>
+    </nav>
+    <div class="container">
+    </br></br></br>
+
+    <h3> Veuillez vous connecter pour accéder à votre espace profesionnel </h3>
+    </br></br></br></br>
+    <div>
+            <div class="col">
+            {% for message in app.flashes('error') %}
+               <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{message}}
+                </div>
+            {% endfor %}
+        </div>
+    {{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+
+    <div class="row">
+
+        <div class="col">
+            {{ form_row(form.email,{'attr':{'placeholder': "votre email"}}) }}
+        </div>
+        <div class="col" >
+            {{ form_row(form.password,{'attr':{'placeholder': "votre mot de passe"}}) }}
+        </div>
+        <div class="col" style="margin-top:35px;">
+            <button type="submit" id="suite" class="btn btn-primary">Connexion</button>
+        </div>
+        
+        <div class="col" >
+            <SPAN style="position: absolute; top: -30 px; left: -30%;">
+            <img src="../uploads/e0ce35c7af4fc7e17fcb3e2b33abc54e.jpg" width="550" height="680" alt="" class="w-full" data-aos="fade-up" data-aos-delay="0">
+            </SPAN>
+        </div>
+    
+    {{ form_end(form) }}
+    
+    </div>
+    <div class="col" >
+        <p>Vous n'avez pas de compte? <a href={{ path("app_add_fournisseur")}}>Inscrivez-vous</a></p>
+    </div>
+</div>
 {% endblock %}

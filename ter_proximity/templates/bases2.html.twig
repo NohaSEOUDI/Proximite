@@ -14,8 +14,8 @@
         {% block stylesheets %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
 
-        <link rel="stylesheet" href="{{ asset('css/appointment-picker.css')}}">
-        <script src="{{ asset( 'js/appointment-picker.js') }}"></script>
+        {# <link rel="stylesheet" href="{{ asset('css/appointment-picker.css')}}">
+        <script src="{{ asset( 'js/appointment-picker.js') }}"></script> #}
 
             {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
@@ -25,7 +25,7 @@
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        {# <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <a class="navbar-brand" href="#"> <big>Proximity</big> <small>Pro</small> </a>
             <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
@@ -59,11 +59,11 @@
             <a class="nav-link" href="#">modifier mes horaires</a>
         </li>
        
-        </ul>
-        <div class="container">
+        </ul> #}
+        {# <div class="container"> #}
             {% block body %}{% endblock %}
             
-        </div>
+        {# </div> #}
          
         {# <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js%22%3E</script>
         <script src="node_modules\jquery-datetimepicker\jquery.datetimepicker.js" ></script>
