@@ -1,6 +1,13 @@
 {% extends 'bases2.html.twig' %}
 
 {% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#"> <big>Proximity</big> <small>Pro</small> </a>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+        </div>
+      </nav>
+    <div style="height:60%; width:60%; margin-left:20%;>
 	<h2>Votre type de service</h2>
 	<div class="form-group col-lg-6">
     {{ form_start(form) }}
@@ -14,4 +21,5 @@
  <img src="/uploads/e0ce35c7af4fc7e17fcb3e2b33abc54e.jpg" width="550" height="680" alt="" class="w-full" data-aos="fade-up" data-aos-delay="0">
 </SPAN>
     {#{{form(formFournisseur)}} pour afficher le formulaire en entier #}
+</div>
 {% endblock %}
