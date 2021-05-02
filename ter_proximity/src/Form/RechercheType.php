@@ -2,27 +2,38 @@
 
 namespace App\Form;
 
-use App\Entity\VillesFranceFree;
+use App\Entity\Service;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class VilleType extends AbstractType
+class RechercheType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('villeNom', ChoiceType::class, [
-                'placeholder' => 'Choisissez le type de votre service',
+            ->add('Ville', ChoiceType::class, [
+                /*'placeholder' => 'Choisissez la ville',
+                'class'=>Service::class,
+                'choice_label'=>'ville'*/
+               'placeholder' => 'Choisissez la ville de votre service',
                 'choices'  => [
-                    
                     'Montpellier' => 'Montpellier',
                     'Paris' => 'Paris',
+                    'Bordeaux'=>'Bordeaux',
+                    'Nantes'=>'Nantes',
+                    'Nice'=>'Nice',
+                    'Starsbourg'=>'Starsbourg',
                     'Toulouse' => 'Toulouse',
+                    'Marseille'=>'Marseille',
+                    'Lille'=>'Lille',
+                    'Lyon'=>'Lyon',
+                    'Le Mans Blanc'=>'Le Mans Blanc',
                     'Autres'=>'Autres'],])
-            ->add('villeDate',ChoiceType::class, [
+            ->add('TypeService',ChoiceType::class, [
                 'placeholder' => 'Choisissez le type de votre service',
                 'choices'  => [
                     
@@ -55,13 +66,13 @@ class VilleType extends AbstractType
                     'Restauration chez l’habitant' => 'Restauration chez l’habitant',
                     'Boulanger' => 'Boulanger'
                 ],])
-            ->add('search', SubmitType::class);
+            ->add('Recherche', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    /*public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => VillesFranceFree::class,
         ]);
-    }
+    }*/
 }

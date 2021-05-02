@@ -51,20 +51,21 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
 use App\Entity\Service;
+use Symfony\Component\Form\FormTypeInterface;
 class DefaultController extends AbstractController
 {
    /**
      * @Route("/recherche", name="app_searche",methods={"Get","POST"})
      */
-    public function indexAction(Request $request):  Response
+   /* public function indexAction(Request $request):  Response
     {//fonction de reserche de ville
-        $manager = $this->getDoctrine()->getManager();
+       $manager = $this->getDoctrine()->getManager();
        $services= new Service();
 
          $form = $this->createForm(Service::class, $services);
          $form->handleRequest($request);
 
-        $kw = $request->query->get('kw');
+        $kw = $request->query->get('kw');//type de poste 
         $city=$request->query->get('city');
        
 if($form->isSubmitted() && $form->isValid() ){
@@ -89,15 +90,15 @@ if($form->isSubmitted() && $form->isValid() ){
         ]);
 
         //return $this->render('default/index.html.twig', compact('users'));
-    }
+    }*/
     /**
      * @Route("/recherche", name="homepage")
      */
-    /*public function indexAction(Request $request)
+    public function indexAction(Request $request)
     {
 
-        $kw = $request->query->get('kw');
-        $city=$request->query->get('city');
+        $kw = $request->query->get('kw');//type de service 
+        $city=$request->query->get('city');//ville 
         if (!empty($kw)) {
             $query = $this->getDoctrine()
                 ->getManager()
@@ -116,5 +117,5 @@ if($form->isSubmitted() && $form->isValid() ){
 
 
         return $this->render('default/index.html.twig', compact('users'));
-    }*/
+    }
 }

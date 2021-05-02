@@ -50,9 +50,9 @@ class Service
     private $tarif;
     
     /**
-     * @ORM\Column(type="string",length=255)
+     * @ORM\Column(type="string",length=255,nullable=true)
      */
-    private $city;
+    private $ville;
     /**
      * @ORM\ManyToOne(targetEntity=TypeService::class)
      * @ORM\JoinColumn(nullable=false)
@@ -64,22 +64,8 @@ class Service
      */
     private $fournisseur;
 
-    /**
-     * @return mixed
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
+  
 
-    /**
-     * @param mixed $city
-     */
-    public function setCity($city): void
-    {
-        $this->city = $city;
-    }
-    
     public function getId(): ?int
     {
         return $this->id;
@@ -187,4 +173,16 @@ class Service
 
         return $this;
     }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+   
+    public function setVille(string $ville): self
+    {
+        $this->ville = $ville;
+    }
+    
 }

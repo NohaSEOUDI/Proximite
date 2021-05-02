@@ -7,33 +7,12 @@
  <h1 align="center"><B>Annonces</B> </h1></br>
 
   <div  class="d-grid gap-10 col-5 mx-auto" >
+  {{ form(search_form)}}
+</div>
 
-  <div class="row mt-3 d-flex justify-content-center">
-        <form action="{{ path('homepage') }}" method="get">
-            <div class="row">
-                <div class="col">
-                    <input required type="text" name="city" class="form-control" id="city" placeholder="Ville">
-                </div>
-                <div class="col">
-                    <input required type="text" name="kw" class="form-control" id="kw" placeholder="chercher">
-                </div>
-            </div>
-            <div class="row my-2">
-                <div class="col">
-                    <label for="inputEmail4">Début</label>
-                    <input required type="date" name="date1" class="form-control" id="d1" placeholder="Début">
-                </div>
-                <div class="col">
-                    <label for="inputEmail4">Finir</label>
-                    <input required type="date" name="date2" class="form-control" id="d2" placeholder="Finir">
-                </div>
-            </div>
-               <button type="submit" class="btn btn-primary mb-2">Rechercher</button>
-        </form>
-    </div>
-
-      
-
+ {% if services|length>0 %}
+	
+   <div  class="d-grid gap-10 col-5 mx-auto" >
 
 	{% for service in services %}
 		<div class="card mb-3" style="max-width: 540px;">
@@ -72,7 +51,11 @@
 
 	
 	{% endfor %}
+{% else %}
+	<h3 align="center">Aucun résultat pour votre recherche</h1>
+{% endif %}
 </div>
+
 
 {% endblock %}
 

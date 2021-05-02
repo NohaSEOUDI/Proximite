@@ -32,7 +32,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 
-use App\Entity\VillesFranceFree;
+
 use Symfony\Component\Form\AbstractType;
 
 use Symfony\Component\Form\FormBuilderInterface;
@@ -56,47 +56,7 @@ class PriseRdvController extends AbstractController
         return $this->render('pins/prise_rdv/indexRdv.html.twig',compact('Reservations'));
     }
 
-    /**
-     * @Route("/recherche", name="app_searche",methods={"Get","POST"})
-     */
-    public function indexAction(Request $request):  Response
-    {//fonction de reserche de ville
-        $manager = $this->getDoctrine()->getManager();
-        $ville= new VillesFranceFree();
-
-         $form = $this->createForm(VilleType::class, $ville);
-         $form->handleRequest($request);
-
-        $kw = $request->query->get('kw');
-        $city=$request->query->get('city');
-       
-if($form->isSubmitted() && $form->isValid() ){
-        if (!empty($kw)) {
-            $query = $this->getDoctrine()
-                ->getManager()
-                ->createQuery("select u from App:User u
-                 where u.post = :kw and u.city= :city
-                ")
-                ->setParameter('kw', "$kw")
-                ->setParameter('city', "$city");
-            $users = $query->getResult();
-        } else {
-            $query = $this->getDoctrine()
-                ->getManager()
-                ->getRepository(User::class);
-            $users = $query->findAll();
-        }
- }
-        return $this->render('default/index.html.twig',[
-            'form' => $form->createView() 
-        ]);
-
-        //return $this->render('default/index.html.twig', compact('users'));
-    }
-
-
-
-
+  
    /**
     *@Route("/prise/rdv/{id}",name="app_rdv_delete",methods="GET|Delete",
     requirements={"id":"\d+"})
@@ -187,7 +147,6 @@ if($form->isSubmitted() && $form->isValid() ){
        // dd($value);
 
       }
-      
      // dd($notes);
       return $this->render('pins/prise_rdv/noterF.html.twig',['form'=>
       $form->createView()]);

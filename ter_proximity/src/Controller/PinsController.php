@@ -51,12 +51,10 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
-
+use App\Form\RechercheType;
 class PinsController extends AbstractController
 {   private $em;
-<<<<<<< HEAD
-   
-=======
+
     
 
     /**
@@ -104,9 +102,7 @@ class PinsController extends AbstractController
      * @Route("/profile/{idF}",name="app_profile",methods={"Get","POST"})
      */
     public function profile(Request $request, $idF): Response
-
     {	
-        
         $fournisseur = $this->getDoctrine()
             ->getRepository(Fournisseur::class)
             ->find($idF);
@@ -123,7 +119,7 @@ class PinsController extends AbstractController
             'idF'=>$fournisseur->getId()
         ]);
     }
->>>>>>> d36062df0db10bb6ee13cb82e7b510cfe4d23ebb
+
 
      /**
      * @Route("/modifieProfile/{idF}",name="app_modifier_profile",methods={"Get","POST"})
@@ -242,31 +238,7 @@ class PinsController extends AbstractController
             'form' => $form1->createView() 
         ]);
     }
-    
-    public function indexAction(Request $request)
-    {
-
-        $kw = $request->query->get('kw');
-        $city=$request->query->get('city');
-        if (!empty($kw)) {
-            $query = $this->getDoctrine()
-                ->getManager()
-                ->createQuery("select u from App:User u
-                 where u.post = :kw and u.city= :city
-                ")
-                ->setParameter('kw', "$kw")
-                ->setParameter('city', "$city");
-            $users = $query->getResult();
-        } else {
-            $query = $this->getDoctrine()
-                ->getManager()
-                ->getRepository(User::class);
-            $users = $query->findAll();
-        }
-
-
-        return $this->render('default/index.html.twig', compact('users'));
-    }
+   
 
 
     /**
@@ -328,10 +300,43 @@ class PinsController extends AbstractController
         ]); 
         
     }
+     /**
+     * @Route("/reservation/showServices", name="app_show_services",methods={"Get","POST"})
+     */
+    public function recherche(Request $request,ReservationRepository $ReservationRep) : Response
+    {
+         /*$services = $this->getDoctrine()
+        ->getRepository(Service::class)
+        ->findAll();*/
+   // dd($resultat);
+     $resultat=[];
+      $searcheForm=$this->createForm(RechercheType::class);
+
+    if($searcheForm->handleRequest($request)->isSubmitted() and $searcheForm->isValid() ){
+      $city=$request->get('recherche')['Ville'];
+      $typeS=$request->get('recherche')['TypeService'];
+
+     $query = $this->getDoctrine()->getManager()
+                 ->createQuery("select s from App\Entity\Service s 
+                  where  s.ville=:Ville")
+                ->setParameter('Ville', "$city");
+                //->setParameter('TypeService', "$typeS");
+                //dd($query);
+    $resultat = $query->getResult();
+     // dd($resultat);
+       //$critaire=$searcheForm->getData();
+       //dd($critaire);
+       //$rechRDV=$ReservationRep->findByCity($critaire);
+       //dd($rechRDV);
+      }
+      return $this->render('reservation/showServices.html.twig',['search_form'=>$searcheForm->createView(),
+            'services'=>$resultat]);
+
+    }
 
     /**
      * @Route("/reservation/showServices",name="app_show_services",methods={"Get","POST"})
-     */
+     
     public function showServices(Request $request): Response
     {   
         
@@ -348,9 +353,9 @@ class PinsController extends AbstractController
         return $this->render('reservation/showServices.html.twig',[
             'services'=>$services
         ]);
-    }
+    }*/
     
-
+   
  /**
  * @Route("/reservation/showCalendar/{idS}/{idClient}/{idRe}",name="app_show_calendar",methods={"Get","POST"})
   * @param Request $request
@@ -412,18 +417,21 @@ class PinsController extends AbstractController
                 $rdv->setFournisseur($fournisseur);
                 $rdv->setFrais(1089);
                 $rdv->setHeure($_POST["time"]); 
-               // $rdv->setJour($_POST["date"]);
+                $date=$request->get("reservation");
+                $rdv->setJour(\DateTime::createFromFormat('d-m-Y',$date['jour']));
                 $manager->persist($rdv);
                 $manager->flush();
                 $this->addFlash('success',"Merci, votre RDV a bien été enregistré !");
              
-
+                    
              $email= (new Email())
                 ->from(new Address('noreplay@proximite.com', 'proximite'))
                 ->to($user->getEmail())
                 ->subject('Votre rendez-vous  à bien été changé')
-                ->html('<h3 align="center">Bonjour votre rdv est bien été enregistré</h3>
-
+                ->html('<h3 align="center">Bonjour votre rdv est bien été modifié</h3>
+                    <p align="center">Rendez-vous :
+                        Le '.$date["jour"].' à '.$_POST["time"].'
+                    </p>
                     <p><B>Informations:</B> <br><br>
                    <B>Moyens de paiement et remboursement</B></br>
                         *Chèques</br>
@@ -448,7 +456,7 @@ class PinsController extends AbstractController
             }
               
        }
-        
+   
     
 
           if ($this->getUser()==null) {
