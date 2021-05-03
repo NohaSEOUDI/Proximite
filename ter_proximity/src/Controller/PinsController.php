@@ -399,13 +399,15 @@ class PinsController extends AbstractController
             $date="".$rdv->getJour()->format('d/m/Y');
             $nondispo[$date][]=$rdv->getHeure();
         }
+       // dd($this->getDoctrine()->getRepository(User::class)->find($idClient));
+      
+        
+    //pour modifier le RDV 
+       if($idRe!= null){
         $user=$this->getDoctrine()
             ->getRepository(User::class)
             ->find($idClient); 
     
-             
-    //pour modifier le RDV 
-       if($idRe!= null){
             $rdv = $this->getDoctrine()
             ->getRepository(Reservation::class)
             ->find($idRe); 
@@ -418,7 +420,7 @@ class PinsController extends AbstractController
                 $rdv->setFrais(1089);
                 $rdv->setHeure($_POST["time"]); 
                 $date=$request->get("reservation");
-                $rdv->setJour(\DateTime::createFromFormat('d-m-Y',$date['jour']));
+                $rdv->setJour(\DateTime::createFromFormat('Y-m-d',$date['jour']));
                 $manager->persist($rdv);
                 $manager->flush();
                 $this->addFlash('success',"Merci, votre RDV a bien été enregistré !");
@@ -466,7 +468,9 @@ class PinsController extends AbstractController
          else{
 
         if($form->isSubmitted() && $form->isValid() &&  $idRe==null){
-           
+             $user=$this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($idClient); 
             $reservation->setClient($idClient);
             $reservation->setDuree($service->getCreneauBase());
             $reservation->setService($service);

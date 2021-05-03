@@ -60,17 +60,17 @@ $query =  $this->createQueryBuilder('a')
     $resultat = $query->getResult();*/
     
    //fonction qui me récupere la politique du F 
-   /* public function findOneBySomeField($value): ?Array
+    public function findOneBySomeField($value): ?Array
     {
         return $this->createQueryBuilder('r')//alias r comme reservation
-            ->select(' f.politique')
+            ->select('Distinct f.politique')
             ->join('App\Entity\Fournisseur','f')
             ->andWhere('f.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
-    }*/
+    }
 
     //SELECT f.politique FROM App\Entity\Reservation r INNER JOIN App\Entity\Fournisseur WHERE f.id = :val
 
@@ -83,7 +83,7 @@ $query =  $this->createQueryBuilder('a')
            // ->andWhere('c.type = :type')
             //->setParameter('type', $critaire['type'])
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }*/
 

@@ -41,19 +41,14 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class PriseRdvController extends AbstractController
 {
-
-   
-
     /**
      * @Route("/prise/rdv/", name="app_rdv")
      */
     public function index(ReservationRepository $priseRdv,UserRepository $user): Response
     {
-       //$user=$this->getUser();
-       //$userId=$this->getId();
-       ///$id=$userId;
         $Reservations= $priseRdv->findAll();
-        return $this->render('pins/prise_rdv/indexRdv.html.twig',compact('Reservations'));
+        return $this->render('pins/prise_rdv/indexRdv.html.twig'
+          ,compact('Reservations'));
     }
 
   
@@ -64,17 +59,7 @@ class PriseRdvController extends AbstractController
    */
     public function delete($id,ReservationRepository $priseRdv,Request $request,Reservation $r,EntityManagerInterface $em): Response
     {
-   
-       /*si on veux l'enterdit d'annuler un rdv déjà passé
-       if($r->getEstHonore()==1){
-         $this->addFlash('error', 'Votre rdv est passée !');
-         $this->redirectToRoute('app_rdv');
-         return $this->render('pins/prise_rdv/indexRdv.html.twig', [
-                'Reservations'=>$r,
-              ]);
-
-       }
-       else{*/
+  
     $val=$r->getFournisseur()->getId();
    
     $var=$priseRdv->findOneBySomeField($val);//fonction qui retourne un Array 
@@ -88,7 +73,6 @@ class PriseRdvController extends AbstractController
         
       }
     
-      
       switch($value){
          case 'Pas de possibilité dannulation une fois le client a réservé':
              $this->addFlash('error','Vous n\'avez pas le droit d\'annuler le rdv');
@@ -162,14 +146,15 @@ class PriseRdvController extends AbstractController
     //dd($id);
 
     $val=$r->getFournisseur()->getId();
+
     $service=$r->getService()->getId();
-     //  dd($service);
+     //dd($val);
     $idclient=$r->getClient()->getId();
     //dd($idclient);
     $var=$priseRdv->findOneBySomeField($val);//fonction qui retourne un Array 
     //dd($var);
     $value=$var["politique"];//je récupere la valeur de la politique 
-    //dd($value);
+   //dd($value);
   if($r->getEstHonore()==1){
         $this->addFlash('error', 'Votre rdv est passée !');
          $this->redirectToRoute('app_rdv');

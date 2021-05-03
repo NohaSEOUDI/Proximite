@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
+
 {% block head %}
-		<meta charset="utf-8" >
-		<title>Project</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="css/style.css" rel="stylesheet" />
+    <meta charset="utf-8" >
+    <title>Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
  
 <style>
     .bs-example{
@@ -16,17 +17,17 @@ $(document).ready(function(){
 });
 </script>
 
-		<style type="text/css">
-		.item {
-		    	display: none;
-		   		position: relative;
-		   	   .transition(.6s ease-in-out left);
-		}
+    <style type="text/css">
+    .item {
+          display: none;
+          position: relative;
+           .transition(.6s ease-in-out left);
+    }
 
-		</style>
+    </style>
   
 
-	{% endblock  %}
+  {% endblock  %}
 {% block body %}
 
 
@@ -34,9 +35,9 @@ $(document).ready(function(){
  
 
 <h1 align="center"><B>Bonjour {{ app.user.Uuid }}</B></h1>
-			
+      
 
-<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+<!--div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
   
   <div style="position: absolute; top: 0; right: 0;">
 
@@ -67,7 +68,6 @@ $(document).ready(function(){
       </div>
     </div>
   </div>
-</div>
+</div-->
 
 {% endblock %}
-
