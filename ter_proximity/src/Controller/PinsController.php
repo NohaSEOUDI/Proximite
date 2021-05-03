@@ -318,12 +318,12 @@ class PinsController extends AbstractController
 
      $query = $this->getDoctrine()->getManager()
                  ->createQuery("select s from App\Entity\Service s 
-                  where  s.ville=:Ville")
-                ->setParameter('Ville', "$city");
-                //->setParameter('TypeService', "$typeS");
-                //dd($query);
+                  Join App\Entity\TypeService t where s.titre=:TypeService and t.type=:TypeService and s.ville=:Ville")
+                ->setParameter('Ville', "$city")
+                ->setParameter('TypeService', "$typeS");
+              //dd($query);
     $resultat = $query->getResult();
-     // dd($resultat);
+     //dd($resultat);
        //$critaire=$searcheForm->getData();
        //dd($critaire);
        //$rechRDV=$ReservationRep->findByCity($critaire);
