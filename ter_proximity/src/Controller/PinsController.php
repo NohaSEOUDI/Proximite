@@ -43,10 +43,18 @@ use App\Controller\Environment;
 use App\Repository\ReservationRepository;
 use App\Repository\NotesRepository;
 use App\Entity\Notes;
-
-
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Security\LoginFormAuthenticator;
+use App\Security\EmailVerifier;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
+use App\Form\RechercheType;
 class PinsController extends AbstractController
 {   private $em;
+
     
 
     /**
@@ -94,9 +102,7 @@ class PinsController extends AbstractController
      * @Route("/profile/{idF}",name="app_profile",methods={"Get","POST"})
      */
     public function profile(Request $request, $idF): Response
-
     {	
-        
         $fournisseur = $this->getDoctrine()
             ->getRepository(Fournisseur::class)
             ->find($idF);
@@ -113,6 +119,7 @@ class PinsController extends AbstractController
             'idF'=>$fournisseur->getId()
         ]);
     }
+
 
      /**
      * @Route("/modifieProfile/{idF}",name="app_modifier_profile",methods={"Get","POST"})
@@ -191,13 +198,14 @@ class PinsController extends AbstractController
 
         $form = $this->createForm(FournisseurType::class, $fournisseur);
         $form->handleRequest($request);
+
          if ($this->getUser()) {
             $this->addFlash('error','Vous n\'avez pas le droit d\'accéder !');//car connecté en étant client
              return $this->redirectToRoute('app_rdv');
          }
+
         if($form->isSubmitted() && $form->isValid() ){
            // dump($request);
-
             
             $manager->persist($fournisseur);
             $manager->flush();
@@ -230,6 +238,8 @@ class PinsController extends AbstractController
             'form' => $form1->createView() 
         ]);
     }
+   
+
 
     /**
      * @Route("/pins/addService/{idFournisseur}/{idType}",name="app_add_service",methods={"Get","POST"})
@@ -290,10 +300,43 @@ class PinsController extends AbstractController
         ]); 
         
     }
+     /**
+     * @Route("/reservation/showServices", name="app_show_services",methods={"Get","POST"})
+     */
+    public function recherche(Request $request,ReservationRepository $ReservationRep) : Response
+    {
+         /*$services = $this->getDoctrine()
+        ->getRepository(Service::class)
+        ->findAll();*/
+   // dd($resultat);
+     $resultat=[];
+      $searcheForm=$this->createForm(RechercheType::class);
+
+    if($searcheForm->handleRequest($request)->isSubmitted() and $searcheForm->isValid() ){
+      $city=$request->get('recherche')['Ville'];
+      $typeS=$request->get('recherche')['TypeService'];
+
+     $query = $this->getDoctrine()->getManager()
+                 ->createQuery("select s from App\Entity\Service s 
+                  where  s.ville=:Ville")
+                ->setParameter('Ville', "$city");
+                //->setParameter('TypeService', "$typeS");
+                //dd($query);
+    $resultat = $query->getResult();
+     // dd($resultat);
+       //$critaire=$searcheForm->getData();
+       //dd($critaire);
+       //$rechRDV=$ReservationRep->findByCity($critaire);
+       //dd($rechRDV);
+      }
+      return $this->render('reservation/showServices.html.twig',['search_form'=>$searcheForm->createView(),
+            'services'=>$resultat]);
+
+    }
 
     /**
      * @Route("/reservation/showServices",name="app_show_services",methods={"Get","POST"})
-     */
+     
     public function showServices(Request $request): Response
     {   
         
@@ -310,50 +353,43 @@ class PinsController extends AbstractController
         return $this->render('reservation/showServices.html.twig',[
             'services'=>$services
         ]);
-    }
+    }*/
     
-
+   
  /**
- * @Route("/reservation/showCalendar/{idS}/{idClient}",name="app_show_calendar",methods={"Get","POST"})
+ * @Route("/reservation/showCalendar/{idS}/{idClient}/{idRe}",name="app_show_calendar",methods={"Get","POST"})
   * @param Request $request
   * @param User $idClient
   * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
  */
-    public function showCalendar(Request $request,$idS,User $idClient=null): Response
+    public function showCalendar(MailerInterface $mailer,GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator,Request $request,$idS,Reservation $idRe=null,User $idClient=null): Response
     {   //fonction qui ajoute le service en bbd
 
            // $user_id= $request->query()->get('user_id');
    
-        
+           
         $manager = $this->getDoctrine()->getManager();
         
+        //on searche si le rdv existe ou pas 
+        $reservation= new Reservation();
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
 
-       // dd($client);
-        //dd($idClient->getId());
-
-        //$IdClientVal=$idClient->getId();
-
-       // $IdClientVal=$idClient->getId();
-
-        $service = $this->getDoctrine()
+         $service = $this->getDoctrine()
         ->getRepository(Service::class)
         ->find($idS);
+        //dd($service);
 
         $fournisseur = $service->getFournisseur();
+
 
         $calendrier = $this->getDoctrine()
         ->getRepository(Calendrier::class)
         ->find($idS);
 
-        dump($service);
-        dump($calendrier);
-        $reservation= new Reservation();
-        
-        $form = $this->createForm(ReservationType::class, $reservation);
+              
        
-        $form->handleRequest($request);
-
-        $rdvNondispo=$this->getDoctrine()
+         $rdvNondispo=$this->getDoctrine()
         ->getRepository(Reservation::class)
         ->findBy(
             array('service'=>$service), 
@@ -363,31 +399,116 @@ class PinsController extends AbstractController
             $date="".$rdv->getJour()->format('d/m/Y');
             $nondispo[$date][]=$rdv->getHeure();
         }
-        //$nondispo=implode(",", $array);
-       
-        // dump($_POST["time"]);
+       // dd($this->getDoctrine()->getRepository(User::class)->find($idClient));
+      
+        
+    //pour modifier le RDV 
+       if($idRe!= null){
+        $user=$this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($idClient); 
+    
+            $rdv = $this->getDoctrine()
+            ->getRepository(Reservation::class)
+            ->find($idRe); 
+         
+           if($form->isSubmitted() && $form->isValid() && $rdv){
+                $rdv->setClient($idClient);
+                $rdv->setDuree($service->getCreneauBase());
+                $rdv->setService($service);
+                $rdv->setFournisseur($fournisseur);
+                $rdv->setFrais(1089);
+                $rdv->setHeure($_POST["time"]); 
+                $date=$request->get("reservation");
+                $rdv->setJour(\DateTime::createFromFormat('Y-m-d',$date['jour']));
+                $manager->persist($rdv);
+                $manager->flush();
+                $this->addFlash('success',"Merci, votre RDV a bien été enregistré !");
+             
+                    
+             $email= (new Email())
+                ->from(new Address('noreplay@proximite.com', 'proximite'))
+                ->to($user->getEmail())
+                ->subject('Votre rendez-vous  à bien été changé')
+                ->html('<h3 align="center">Bonjour votre rdv est bien été modifié</h3>
+                    <p align="center">Rendez-vous :
+                        Le '.$date["jour"].' à '.$_POST["time"].'
+                    </p>
+                    <p><B>Informations:</B> <br><br>
+                   <B>Moyens de paiement et remboursement</B></br>
+                        *Chèques</br>
+                        *Espèces</br>
+                        *Cartes Bancaires</br>
+
+                   </p>
+                   <p>
+                    Vous pouvez continuer à vous rendre à votre consultation pendant le couvre-feu. Pensez simplement à vous munir de votre attestation.</br></br>
+                    Afin d\'améliorer la sécurité de vos données, nous n\'affichons plus le détail de vos rendez-vous dans nos messages.</br></br>
+                    </p>
+                    <div><B>En cas d\'imprévu, pensez à le déplacer ou l\'annuler le plus tôt possible.</B></div></br>
+                    <p>Cheers!</p>
+                    <div>Services de proximité</br>
+                    Montpellier
+                    </div>
+
+                ');
+             $mailer->send($email);
+              return $this->redirectToRoute('app_rdv');
+
+            }
+              
+       }
+   
+    
+
           if ($this->getUser()==null) {
             $this->addFlash('error','Vous devez vous connecter avant de prendre le RDV!');//a revoir 
              return $this->redirectToRoute('app_login');
          }
          else{
 
-
-        if($form->isSubmitted() && $form->isValid() ){
+        if($form->isSubmitted() && $form->isValid() &&  $idRe==null){
+             $user=$this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($idClient); 
             $reservation->setClient($idClient);
             $reservation->setDuree($service->getCreneauBase());
             $reservation->setService($service);
             $reservation->setFournisseur($fournisseur);
             $reservation->setFrais(10);
             $reservation->setHeure($_POST["time"]);
-            dump($reservation);
-            $manager->persist($reservation);
-            $manager->flush();
-         $this->addFlash('success',"Merci, votre RDV a bien été enregistré !");
-            return $this->redirectToRoute('app_show_services');
-        }
+            //dump($reservation);
+            
+                $manager->persist($reservation);
+                $manager->flush();
 
+           
+         $this->addFlash('success',"Merci, votre RDV a bien été enregistré !");
+           // return $this->redirectToRoute('app_rdv');
+           $newDate = $reservation->getJour()->format('d/m/Y');
+        $email= (new Email())
+                ->from(new Address('noreplay@proximite.com', 'proximite'))
+                ->to($user->getEmail())
+                ->subject('RDV le '. $newDate.' à '.$_POST["time"])
+                ->html('<h3 align="center">Bonjour votre rdv est bien été enregistré</h3>
+                    <p align="center">Votre rendez-vous:<br><br>
+                         '.$newDate.' à '.$_POST["time"].'
+                   
+                    </p>
+                    <div>En cas d\'imprévu, pensez à le déplacer ou l\'annuler le plus tôt possible.</div>
+                    <p>Cheers!</p>
+                    <div>Services de proximité</br>
+                    Montpellier
+                    </div>
+
+                ');
+             $mailer->send($email);
+             return $this->redirectToRoute('app_rdv');
+        }
+      
+        
     }
+
         return $this->render('reservation/showCalendar.html.twig',[
             'calendrier' => $calendrier,
             'formRdv' => $form->createView(),

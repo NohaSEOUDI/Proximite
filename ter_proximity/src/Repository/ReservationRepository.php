@@ -48,6 +48,16 @@ $query =  $this->createQueryBuilder('a')
       ])
 
     */
+     /*  $city=$request->get('recherche')['Ville'];
+      $typeS=$request->get('recherche')['TypeService'];
+
+     $query = $this->getDoctrine()->getManager()
+                 ->createQuery("select s from App\Entity\Service s
+                  where   s.ville=:Ville")
+                ->setParameter('Ville', "$city");
+                //->setParameter('TypeService', "$typeS");
+                //dd($query);
+    $resultat = $query->getResult();*/
     
    //fonction qui me récupere la politique du F 
     public function findOneBySomeField($value): ?Array
@@ -63,6 +73,21 @@ $query =  $this->createQueryBuilder('a')
     }
 
     //SELECT f.politique FROM App\Entity\Reservation r INNER JOIN App\Entity\Fournisseur WHERE f.id = :val
+
+    /*public function findByCity($critaire){
+        return $this->createQueryBuilder('c')//alias r comme reservation
+            ->select('c.ville')
+            //->join('App\Entity\Fournisseur','f')
+            ->andWhere('city.ville = :cityName')
+            ->setParameter('cityName', $critaire['Ville'])
+           // ->andWhere('c.type = :type')
+            //->setParameter('type', $critaire['type'])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }*/
+
+    
 
      /*id du fournisseur en de reservation 
      fonction pour récuperer l'id du f 

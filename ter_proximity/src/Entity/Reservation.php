@@ -18,6 +18,8 @@ class Reservation
      */
     private $id;
 
+    protected $dates = ['expired_at'];
+    
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
@@ -87,7 +89,7 @@ class Reservation
     {
         return $this->jour;
     }
-
+   
     public function setJour(?\DateTimeInterface $jour): self
     {
         $this->jour = $jour;

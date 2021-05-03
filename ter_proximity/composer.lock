@@ -8772,6 +8772,9 @@
             "extra": {
                 "branch-alias": {
                     "dev-main": "1.0-dev"
+                },
+                "patches_applied": {
+                    "Provide flag to force annotation in make entity command": "https://raw.githubusercontent.com/vklux/maker-bundle-force-annotation/master/maker-force-annotation-flag.patch"
                 }
             },
             "autoload": {
@@ -9060,5 +9063,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "1.1.0"
 }
