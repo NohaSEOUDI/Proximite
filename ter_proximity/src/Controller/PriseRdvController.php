@@ -51,11 +51,9 @@ class PriseRdvController extends AbstractController
           ,compact('Reservations'));
     }
 
-  
    /**
     *@Route("/prise/rdv/{id}",name="app_rdv_delete",methods="GET|Delete",
     requirements={"id":"\d+"})
-   * 
    */
     public function delete($id,ReservationRepository $priseRdv,Request $request,Reservation $r,EntityManagerInterface $em): Response
     {

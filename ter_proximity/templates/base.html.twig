@@ -3,26 +3,29 @@
     <head>
         <meta charset="UTF-8">
 
+      {#{ stylesheet bootstrap }#}
+      <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.min.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-
-        <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.min.css">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+      {#{ bootstrap Bundle}#}
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+     {#{ Script jquery }#}
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
 
-  {# <link rel="stylesheet" href="{{ asset('css/appointment-picker.css')}}">
-        <script src="{{ asset( 'js/appointment-picker.js') }}"></script> #}
+   <link rel="stylesheet" href="{{ asset('css/appointment-picker.css')}}">
+        <script src="{{ asset( 'js/appointment-picker.js') }}"></script> 
 
 
        
-        {# <link rel="stylesheet" href="{{ asset('public/css/appointment-picker.css') }}">
-        <script src="{{ asset('public/js/appointment-picker.js') }} "></script> #}
+         <link rel="stylesheet" href="{{ asset('public/css/appointment-picker.css') }}">
+        <script src="{{ asset('public/js/appointment-picker.js') }} "></script> 
 
 
-        <link rel="stylesheet" href="http://localhost/TER/terlebon/ter-l3-proximite/panterest/public/css/appointment-picker.css">
-            <script src="http://localhost/TER/terlebon/ter-l3-proximite/panterest/public/js/appointment-picker.js"></script>
+       {# <link rel="stylesheet" href="http://localhost/TER/terlebon/ter-l3-proximite/panterest/public/css/appointment-picker.css">
+            <script src="http://localhost/TER/terlebon/ter-l3-proximite/panterest/public/js/appointment-picker.js"></script>#}
 
 
             {#{{ encore_entry_link_tags('app') }}#}
@@ -32,13 +35,11 @@
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
-<<<<<<< HEAD
-           
 
          <link ref="stylesheet" href="public/css/style.css">
-=======
+
          <link ref="stylesheet" href="{{asset('public/css/style.css')}}">
->>>>>>> 62e6f24f6f76d91a48299cdb61c63bebb0ce881e
+
         {% endblock %}
          <style type="text/css">
               .alert{
@@ -52,7 +53,6 @@
               .alert-error{
                background-color:#F08080; 
               }
-
               .alert-info{
                 background-color:#1E90FF; 
              }
@@ -79,3 +79,5 @@
    {#{% include 'Layouts/partials/_footer.html.twig' %}#}
   
 </html>
+
+

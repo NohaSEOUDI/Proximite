@@ -19,26 +19,6 @@ class Reservation
     private $id;
 
     protected $dates = ['expired_at'];
-    
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $valideeParFournisseur;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $jour;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $heure;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $duree;
 
     /**
      * @ORM\ManyToOne(targetEntity=Service::class)
@@ -55,6 +35,27 @@ class Reservation
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
      */
     private $client;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $valideeParFournisseur;
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $jour;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $heure;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $duree;
+
+    
 
     /**
      * @ORM\Column(type="integer", nullable=true)

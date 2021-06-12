@@ -31,26 +31,21 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
-     * 
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
-     * 
-     * 
+     * @ORM\Column(type="string") 
      */
     private $password;
-
+    
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank
      * @Assert\Email
      */
     private $email;
-
-
     /**
      * @ORM\Column(type="boolean")
      */
